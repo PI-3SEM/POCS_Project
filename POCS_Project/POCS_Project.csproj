@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\GameController.cs" />
+    <Compile Include="entities\Game.cs" />
+    <Compile Include="entities\Player.cs" />
     <Compile Include="screens\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
