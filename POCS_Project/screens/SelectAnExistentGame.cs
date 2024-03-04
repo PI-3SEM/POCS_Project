@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace POCS_Project
 {
-    public partial class Form1 : Form
+    public partial class SelectAnExistentGame : Form
     {
-        public Form1()
+        public SelectAnExistentGame()
         {
             InitializeComponent();
         }
