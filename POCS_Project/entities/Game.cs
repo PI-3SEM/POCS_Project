@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +17,13 @@ namespace POCS_Project.entities
     }
     public enum GameSituation
     {
-        // Open = A
+        [Display(Name = "A")]
         Open = 0,
-        // Playing = T
+        [Display(Name = "J")]
         Playing = 1,
-        // Closed = E
-        Closed = 2
+        [Display(Name = "F")]
+        Closed = 2,
+        [Display(Name = "T")]
+        All = 3
     }
 }

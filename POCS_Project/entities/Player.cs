@@ -8,8 +8,8 @@ namespace POCS_Project.entities
 {
     public class Player
     {
-        public string Id { get; set; } 
+        public int Id { get; set; } 
         public string Name { get; set; }
-
+        public int Record { get; set; }
     }
 }
