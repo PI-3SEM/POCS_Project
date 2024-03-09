@@ -1,4 +1,5 @@
-﻿using POCS_Project.utils;
+﻿using MagicTrickServer;
+using POCS_Project.utils;
 using System;
 using System.Windows.Forms;
 
@@ -9,11 +10,17 @@ namespace POCS_Project
         public ChoosePlayMode()
         {
             InitializeComponent();
+            lblVersion.Text = Convert.ToString(Jogo.Versao);
         }
 
         private void MultiplayerBtn_Click(object sender, EventArgs e)
         {
             this.ChangeScreen(new SelectAnExistentGame());
+        }
+
+        private void ChoosePlayMode_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

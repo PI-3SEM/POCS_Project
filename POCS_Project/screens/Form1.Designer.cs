@@ -34,6 +34,7 @@
             this.lbltitlemenu = new System.Windows.Forms.Label();
             this.btniconbratislava = new System.Windows.Forms.Button();
             this.pnlMenuBox = new System.Windows.Forms.Panel();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.pnlMenuBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,6 +112,16 @@
             this.pnlMenuBox.Size = new System.Drawing.Size(534, 320);
             this.pnlMenuBox.TabIndex = 4;
             // 
+            // lblVersion
+            // 
+            this.lblVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVersion.Location = new System.Drawing.Point(800, 504);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(0, 16);
+            this.lblVersion.TabIndex = 5;
+            // 
             // ChoosePlayMode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -120,6 +131,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(857, 535);
+            this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.pnlMenuBox);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(825, 540);
@@ -127,9 +139,11 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Choose Play Mode";
+            this.Load += new System.EventHandler(this.ChoosePlayMode_Load);
             this.pnlMenuBox.ResumeLayout(false);
             this.pnlMenuBox.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -140,6 +154,7 @@
         private System.Windows.Forms.Label lbltitlemenu;
         private System.Windows.Forms.Button btniconbratislava;
         private System.Windows.Forms.Panel pnlMenuBox;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 
