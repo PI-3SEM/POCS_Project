@@ -29,13 +29,13 @@ namespace POCS_Project.screens
 
         private void CreateNewGameBtn_Click(object sender, EventArgs e)
         {
-            _gameController.Create(NameGameInput.Text, GroupNameInput.Text, PasswordInput.Text);
+            _gameController.Create(tbxNameGame.Text, tbxNameGroup.Text, tbxPasswordGame.Text);
             this.ChangeScreen(new SelectAnExistentGame());
         }
 
         private void CheckInput(object sender, EventArgs e)
         {
-            if (NameGameInput.Text.Trim().Length > 0 && GroupNameInput.Text.Trim().Length > 0 && PasswordInput.Text.Trim().Length > 0)
+            if (tbxNameGame.Text.Trim().Length > 0 && tbxNameGroup.Text.Trim().Length > 0 && tbxPasswordGame.Text.Trim().Length > 0)
                 CreateNewGameBtn.Enabled = true;
             else 
                 CreateNewGameBtn.Enabled = false;

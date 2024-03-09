@@ -37,9 +37,9 @@
             this.CreateNewGameBtn = new System.Windows.Forms.Button();
             this.BackToMenuBtn = new System.Windows.Forms.Button();
             this.pnlFormCreateGame = new System.Windows.Forms.Panel();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbxNameGroup = new System.Windows.Forms.TextBox();
+            this.tbxNameGame = new System.Windows.Forms.TextBox();
+            this.tbxPasswordGame = new System.Windows.Forms.TextBox();
             this.pnlFormCreateGame.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,7 +113,7 @@
             // 
             this.CreateNewGameBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CreateNewGameBtn.Enabled = false;
-            this.CreateNewGameBtn.Location = new System.Drawing.Point(223, 252);
+            this.CreateNewGameBtn.Location = new System.Drawing.Point(218, 261);
             this.CreateNewGameBtn.Margin = new System.Windows.Forms.Padding(2);
             this.CreateNewGameBtn.Name = "CreateNewGameBtn";
             this.CreateNewGameBtn.Size = new System.Drawing.Size(104, 19);
@@ -141,11 +141,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFormCreateGame.BackColor = System.Drawing.Color.Transparent;
             this.pnlFormCreateGame.Controls.Add(this.CreateNewGameBtn);
-            this.pnlFormCreateGame.Controls.Add(this.textBox3);
+            this.pnlFormCreateGame.Controls.Add(this.tbxNameGroup);
             this.pnlFormCreateGame.Controls.Add(this.GroupNameInput);
-            this.pnlFormCreateGame.Controls.Add(this.textBox2);
+            this.pnlFormCreateGame.Controls.Add(this.tbxNameGame);
             this.pnlFormCreateGame.Controls.Add(this.NameGameInput);
-            this.pnlFormCreateGame.Controls.Add(this.textBox1);
+            this.pnlFormCreateGame.Controls.Add(this.tbxPasswordGame);
             this.pnlFormCreateGame.Controls.Add(this.PasswordInput);
             this.pnlFormCreateGame.Controls.Add(this.label3);
             this.pnlFormCreateGame.Controls.Add(this.label1);
@@ -155,35 +155,35 @@
             this.pnlFormCreateGame.Size = new System.Drawing.Size(537, 364);
             this.pnlFormCreateGame.TabIndex = 10;
             // 
-            // textBox3
+            // tbxNameGroup
             // 
-            this.textBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox3.Location = new System.Drawing.Point(183, 150);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(188, 20);
-            this.textBox3.TabIndex = 3;
-            this.textBox3.TextChanged += new System.EventHandler(this.CheckInput);
+            this.tbxNameGroup.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxNameGroup.Location = new System.Drawing.Point(183, 150);
+            this.tbxNameGroup.Margin = new System.Windows.Forms.Padding(2);
+            this.tbxNameGroup.Name = "tbxNameGroup";
+            this.tbxNameGroup.Size = new System.Drawing.Size(188, 20);
+            this.tbxNameGroup.TabIndex = 3;
+            this.tbxNameGroup.TextChanged += new System.EventHandler(this.CheckInput);
             // 
-            // textBox2
+            // tbxNameGame
             // 
-            this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox2.Location = new System.Drawing.Point(183, 91);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(188, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.TextChanged += new System.EventHandler(this.CheckInput);
+            this.tbxNameGame.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxNameGame.Location = new System.Drawing.Point(183, 91);
+            this.tbxNameGame.Margin = new System.Windows.Forms.Padding(2);
+            this.tbxNameGame.Name = "tbxNameGame";
+            this.tbxNameGame.Size = new System.Drawing.Size(188, 20);
+            this.tbxNameGame.TabIndex = 2;
+            this.tbxNameGame.TextChanged += new System.EventHandler(this.CheckInput);
             // 
-            // textBox1
+            // tbxPasswordGame
             // 
-            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.textBox1.Location = new System.Drawing.Point(183, 203);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(188, 20);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.TextChanged += new System.EventHandler(this.CheckInput);
+            this.tbxPasswordGame.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxPasswordGame.Location = new System.Drawing.Point(183, 203);
+            this.tbxPasswordGame.Margin = new System.Windows.Forms.Padding(2);
+            this.tbxPasswordGame.Name = "tbxPasswordGame";
+            this.tbxPasswordGame.Size = new System.Drawing.Size(188, 20);
+            this.tbxPasswordGame.TabIndex = 4;
+            this.tbxPasswordGame.TextChanged += new System.EventHandler(this.CheckInput);
             // 
             // CreateNewGame
             // 
@@ -214,8 +214,8 @@
         private System.Windows.Forms.Button CreateNewGameBtn;
         private System.Windows.Forms.Button BackToMenuBtn;
         private System.Windows.Forms.Panel pnlFormCreateGame;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbxNameGroup;
+        private System.Windows.Forms.TextBox tbxNameGame;
+        private System.Windows.Forms.TextBox tbxPasswordGame;
     }
 }
