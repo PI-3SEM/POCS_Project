@@ -35,10 +35,11 @@
             // 
             // CreateNewGame_Btn
             // 
-            this.CreateNewGame_Btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CreateNewGame_Btn.Location = new System.Drawing.Point(855, 548);
+            this.CreateNewGame_Btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreateNewGame_Btn.Location = new System.Drawing.Point(611, 437);
+            this.CreateNewGame_Btn.Margin = new System.Windows.Forms.Padding(2);
             this.CreateNewGame_Btn.Name = "CreateNewGame_Btn";
-            this.CreateNewGame_Btn.Size = new System.Drawing.Size(139, 33);
+            this.CreateNewGame_Btn.Size = new System.Drawing.Size(104, 27);
             this.CreateNewGame_Btn.TabIndex = 0;
             this.CreateNewGame_Btn.Text = "Criar Nova Partida";
             this.CreateNewGame_Btn.UseVisualStyleBackColor = true;
@@ -51,21 +52,24 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GamesTable.AutoScroll = true;
             this.GamesTable.ColumnCount = 3;
-            this.GamesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.GamesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.04895F));
+            this.GamesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.95105F));
             this.GamesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.GamesTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.GamesTable.Location = new System.Drawing.Point(12, 12);
+            this.GamesTable.Location = new System.Drawing.Point(11, 11);
+            this.GamesTable.Margin = new System.Windows.Forms.Padding(2);
             this.GamesTable.Name = "GamesTable";
             this.GamesTable.RowCount = 1;
-            this.GamesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 530F));
-            this.GamesTable.Size = new System.Drawing.Size(982, 530);
+            this.GamesTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 431F));
+            this.GamesTable.Size = new System.Drawing.Size(732, 399);
             this.GamesTable.TabIndex = 1;
             // 
             // BackToMenuBtn
             // 
-            this.BackToMenuBtn.Location = new System.Drawing.Point(12, 555);
+            this.BackToMenuBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BackToMenuBtn.Location = new System.Drawing.Point(39, 440);
+            this.BackToMenuBtn.Margin = new System.Windows.Forms.Padding(2);
             this.BackToMenuBtn.Name = "BackToMenuBtn";
-            this.BackToMenuBtn.Size = new System.Drawing.Size(97, 26);
+            this.BackToMenuBtn.Size = new System.Drawing.Size(73, 21);
             this.BackToMenuBtn.TabIndex = 2;
             this.BackToMenuBtn.Text = "Menu";
             this.BackToMenuBtn.UseVisualStyleBackColor = true;
@@ -73,14 +77,16 @@
             // 
             // SelectAnExistentGame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 593);
+            this.ClientSize = new System.Drawing.Size(754, 491);
             this.Controls.Add(this.BackToMenuBtn);
             this.Controls.Add(this.GamesTable);
             this.Controls.Add(this.CreateNewGame_Btn);
-            this.MinimumSize = new System.Drawing.Size(1024, 640);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(770, 530);
             this.Name = "SelectAnExistentGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Selecionar uma partida existente";
             this.ResumeLayout(false);
 

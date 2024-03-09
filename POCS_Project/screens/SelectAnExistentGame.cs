@@ -30,15 +30,15 @@ namespace POCS_Project
                 var textGame = new Label();
                 var textPlayerLabel = new Label();
                 
-                textGame.Text = $"{game.Id}\n{game.Name}\n{game.Situation.GetDisplayName()}";
-                textGame.Size = new System.Drawing.Size(textGame.Size.Width, 45);
+                textGame.Text = $"Id da partida: {game.Id}\nNome da Partida: {game.Name}\nStatus partida: {game.Situation.GetDisplayName()}";
+                textGame.Size = new System.Drawing.Size(textGame.Size.Width, 150);
                 GamesTable.RowStyles.Add(new RowStyle { Height = 80, SizeType=SizeType.Absolute });
                 GamesTable.Controls.Add(textGame, 0, i);
                 
                 string playerText = "";
                 foreach(var player in game.Players)
                 {
-                    playerText += $"{player.Name} | {player.Record}\n";
+                    playerText += $"Jogador {player.Id}:{player.Name}\nPontuação: {player.Record}\n";
                 }
                 textPlayerLabel.Text = playerText;
                 textPlayerLabel.Size = new System.Drawing.Size(textPlayerLabel.Size.Width, textPlayerLabel.Size.Width * game.Players.Count);
