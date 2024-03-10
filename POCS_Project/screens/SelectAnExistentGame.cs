@@ -1,4 +1,6 @@
-﻿using POCS_Project.controllers;
+﻿using NPOI.SS.Formula.Functions;
+using NPOI.Util;
+using POCS_Project.controllers;
 using POCS_Project.entities;
 using POCS_Project.screens;
 using POCS_Project.utils;
@@ -50,9 +52,23 @@ namespace POCS_Project
                     enterInGameBtn.Text = "Entrar na Partida";
                     enterInGameBtn.Size = new System.Drawing.Size(140, enterInGameBtn.Size.Height);
                     GamesTable.Controls.Add(enterInGameBtn, 2, i);
+                    enterInGameBtn.Name = $"btnEnterGame{game.Id}"; 
+                    enterInGameBtn.Click += delegate(object sender, EventArgs e) { btnClickEnterGame(sender, e, game); };
                 }
             }
         }
+
+
+        private void btnClickEnterGame (object sender, EventArgs e , Game data)
+        {
+            Button btn = sender as Button;
+
+            //MessageBox.Show($"{btn.Name}\n{data.Name} - {data.Id}");
+
+            this.ChangeScreen(new LoginGame(data));
+
+        }
+
 
         private void BackToMenuBtn_Click(object sender, EventArgs e)
         {
