@@ -1,4 +1,5 @@
-﻿using NPOI.SS.Formula.Functions;
+﻿using NPOI.POIFS.Crypt.Dsig;
+using NPOI.SS.Formula.Functions;
 using NPOI.Util;
 using POCS_Project.controllers;
 using POCS_Project.entities;
@@ -53,22 +54,13 @@ namespace POCS_Project
                     enterInGameBtn.Size = new System.Drawing.Size(140, enterInGameBtn.Size.Height);
                     GamesTable.Controls.Add(enterInGameBtn, 2, i);
                     enterInGameBtn.Name = $"btnEnterGame{game.Id}"; 
-                    enterInGameBtn.Click += delegate(object sender, EventArgs e) { btnClickEnterGame(sender, e, game); };
+                    enterInGameBtn.Click += (object sender, EventArgs e) => {
+                        Button btn = sender as Button;
+                        this.ChangeScreen(new LoginGame(game));
+                    };
                 }
             }
         }
-
-
-        private void btnClickEnterGame (object sender, EventArgs e , Game data)
-        {
-            Button btn = sender as Button;
-
-            //MessageBox.Show($"{btn.Name}\n{data.Name} - {data.Id}");
-
-            this.ChangeScreen(new LoginGame(data));
-
-        }
-
 
         private void BackToMenuBtn_Click(object sender, EventArgs e)
         {

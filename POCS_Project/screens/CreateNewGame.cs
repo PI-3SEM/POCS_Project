@@ -40,5 +40,23 @@ namespace POCS_Project.screens
             else 
                 CreateNewGameBtn.Enabled = false;
         }
+
+        private void VerifyEmptyField(object sender, EventArgs e)
+        {
+            string message = "Informe [Field] para criar a partida";
+            TextBox field = sender as TextBox;
+            if (!CreateNewGameBtn.Enabled)
+            {
+                ErrorsMessageLabel.Visible = true;
+                if(tbxNameGame.Text == null || tbxNameGame.Text == "")
+                    message = message.Replace("[Field]","um nome");
+                if (tbxNameGroup.Text == null || tbxNameGroup.Text == "")
+                    message = message.Replace("[Field]","o nome do grupo");
+                if(tbxPasswordGame.Text == null||tbxPasswordGame.Text == "")
+                    message = message.Replace("[Field]","a senha");
+                ErrorsMessageLabel.Text = message;
+            }else
+                ErrorsMessageLabel.Visible = false;
+        }
     }
 }

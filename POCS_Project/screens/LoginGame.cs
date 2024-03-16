@@ -40,5 +40,30 @@ namespace POCS_Project.screens
         {
             this.ChangeScreen(new SelectAnExistentGame());
         }
+
+        private void CheckInput(object sender, EventArgs e)
+        {
+            if (tbxPasswordGame.Text.Trim().Length > 0 && tbxPlayerName.Text.Trim().Length > 0)
+                btnEnterInGame.Enabled = true;
+            else
+                btnEnterInGame.Enabled = false;
+        }
+
+        private void VerifyEmptyFields(object sender, EventArgs e)
+        {
+            string message = "Informe [Field] para entrar na partida";
+            TextBox field = sender as TextBox;
+            if (!btnEnterInGame.Enabled)
+            {
+                ErrorsMessageLabel.Visible = true;
+                if (tbxPlayerName.Text == null || tbxPlayerName.Text == "")
+                    message = message.Replace("[Field]", "um nome");
+                if (tbxPasswordGame.Text == null || tbxPasswordGame.Text == "")
+                    message = message.Replace("[Field]", "a senha");
+                ErrorsMessageLabel.Text = message;
+            }
+            else
+                ErrorsMessageLabel.Visible = false;
+        }
     }
 }
