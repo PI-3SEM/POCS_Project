@@ -36,6 +36,7 @@
             this.btnBackToListGames = new System.Windows.Forms.Button();
             this.btnEnterInGame = new System.Windows.Forms.Button();
             this.pnlInputToLogin = new System.Windows.Forms.Panel();
+            this.btnInitGame = new System.Windows.Forms.Button();
             this.ErrorsMessageLabel = new System.Windows.Forms.Label();
             this.tbxPasswordGame = new System.Windows.Forms.TextBox();
             this.tbxPlayerName = new System.Windows.Forms.TextBox();
@@ -43,7 +44,6 @@
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnInitGame = new System.Windows.Forms.Button();
             this.pnlGameInfo.SuspendLayout();
             this.pnlInputToLogin.SuspendLayout();
             this.SuspendLayout();
@@ -57,59 +57,53 @@
             this.pnlGameInfo.Controls.Add(this.lblGameStatus);
             this.pnlGameInfo.Controls.Add(this.lblGameName);
             this.pnlGameInfo.Controls.Add(this.lblGameId);
-            this.pnlGameInfo.Location = new System.Drawing.Point(35, 33);
-            this.pnlGameInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlGameInfo.Location = new System.Drawing.Point(26, 27);
             this.pnlGameInfo.Name = "pnlGameInfo";
-            this.pnlGameInfo.Size = new System.Drawing.Size(453, 414);
+            this.pnlGameInfo.Size = new System.Drawing.Size(340, 336);
             this.pnlGameInfo.TabIndex = 0;
             // 
             // lblPlayer
             // 
             this.lblPlayer.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblPlayer.AutoSize = true;
-            this.lblPlayer.Location = new System.Drawing.Point(48, 190);
-            this.lblPlayer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPlayer.Location = new System.Drawing.Point(36, 154);
             this.lblPlayer.Name = "lblPlayer";
-            this.lblPlayer.Size = new System.Drawing.Size(0, 16);
+            this.lblPlayer.Size = new System.Drawing.Size(0, 13);
             this.lblPlayer.TabIndex = 4;
             // 
             // lblGameStatus
             // 
             this.lblGameStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblGameStatus.AutoSize = true;
-            this.lblGameStatus.Location = new System.Drawing.Point(48, 110);
-            this.lblGameStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGameStatus.Location = new System.Drawing.Point(36, 89);
             this.lblGameStatus.Name = "lblGameStatus";
-            this.lblGameStatus.Size = new System.Drawing.Size(0, 16);
+            this.lblGameStatus.Size = new System.Drawing.Size(0, 13);
             this.lblGameStatus.TabIndex = 3;
             // 
             // lblGameName
             // 
             this.lblGameName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblGameName.AutoSize = true;
-            this.lblGameName.Location = new System.Drawing.Point(48, 68);
-            this.lblGameName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGameName.Location = new System.Drawing.Point(36, 55);
             this.lblGameName.Name = "lblGameName";
-            this.lblGameName.Size = new System.Drawing.Size(0, 16);
+            this.lblGameName.Size = new System.Drawing.Size(0, 13);
             this.lblGameName.TabIndex = 2;
             // 
             // lblGameId
             // 
             this.lblGameId.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblGameId.AutoSize = true;
-            this.lblGameId.Location = new System.Drawing.Point(48, 27);
-            this.lblGameId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGameId.Location = new System.Drawing.Point(36, 22);
             this.lblGameId.Name = "lblGameId";
-            this.lblGameId.Size = new System.Drawing.Size(0, 16);
+            this.lblGameId.Size = new System.Drawing.Size(0, 13);
             this.lblGameId.TabIndex = 1;
             // 
             // btnBackToListGames
             // 
             this.btnBackToListGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnBackToListGames.Location = new System.Drawing.Point(35, 523);
-            this.btnBackToListGames.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBackToListGames.Location = new System.Drawing.Point(26, 425);
             this.btnBackToListGames.Name = "btnBackToListGames";
-            this.btnBackToListGames.Size = new System.Drawing.Size(77, 37);
+            this.btnBackToListGames.Size = new System.Drawing.Size(58, 30);
             this.btnBackToListGames.TabIndex = 1;
             this.btnBackToListGames.Text = "Voltar";
             this.btnBackToListGames.UseVisualStyleBackColor = true;
@@ -118,10 +112,9 @@
             // btnEnterInGame
             // 
             this.btnEnterInGame.Enabled = false;
-            this.btnEnterInGame.Location = new System.Drawing.Point(31, 206);
-            this.btnEnterInGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEnterInGame.Location = new System.Drawing.Point(23, 167);
             this.btnEnterInGame.Name = "btnEnterInGame";
-            this.btnEnterInGame.Size = new System.Drawing.Size(113, 37);
+            this.btnEnterInGame.Size = new System.Drawing.Size(85, 30);
             this.btnEnterInGame.TabIndex = 2;
             this.btnEnterInGame.Text = "Entrar";
             this.btnEnterInGame.UseVisualStyleBackColor = true;
@@ -140,41 +133,48 @@
             this.pnlInputToLogin.Controls.Add(this.lblPlayerName);
             this.pnlInputToLogin.Controls.Add(this.label4);
             this.pnlInputToLogin.Controls.Add(this.label1);
-            this.pnlInputToLogin.Location = new System.Drawing.Point(579, 33);
-            this.pnlInputToLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlInputToLogin.Location = new System.Drawing.Point(434, 27);
             this.pnlInputToLogin.Name = "pnlInputToLogin";
-            this.pnlInputToLogin.Size = new System.Drawing.Size(404, 412);
+            this.pnlInputToLogin.Size = new System.Drawing.Size(303, 335);
             this.pnlInputToLogin.TabIndex = 3;
+            // 
+            // btnInitGame
+            // 
+            this.btnInitGame.Enabled = false;
+            this.btnInitGame.Location = new System.Drawing.Point(23, 289);
+            this.btnInitGame.Name = "btnInitGame";
+            this.btnInitGame.Size = new System.Drawing.Size(85, 30);
+            this.btnInitGame.TabIndex = 14;
+            this.btnInitGame.Text = "Iniciar Partida";
+            this.btnInitGame.UseVisualStyleBackColor = true;
+            this.btnInitGame.Click += new System.EventHandler(this.btnInitGame_Click);
             // 
             // ErrorsMessageLabel
             // 
             this.ErrorsMessageLabel.AutoSize = true;
             this.ErrorsMessageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ErrorsMessageLabel.ForeColor = System.Drawing.Color.Brown;
-            this.ErrorsMessageLabel.Location = new System.Drawing.Point(27, 27);
-            this.ErrorsMessageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ErrorsMessageLabel.Location = new System.Drawing.Point(20, 22);
             this.ErrorsMessageLabel.Name = "ErrorsMessageLabel";
-            this.ErrorsMessageLabel.Size = new System.Drawing.Size(320, 20);
+            this.ErrorsMessageLabel.Size = new System.Drawing.Size(261, 16);
             this.ErrorsMessageLabel.TabIndex = 4;
             this.ErrorsMessageLabel.Text = "Informe [Field] para entrar na partida";
             this.ErrorsMessageLabel.Visible = false;
             // 
             // tbxPasswordGame
             // 
-            this.tbxPasswordGame.Location = new System.Drawing.Point(31, 155);
-            this.tbxPasswordGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxPasswordGame.Location = new System.Drawing.Point(23, 126);
             this.tbxPasswordGame.Name = "tbxPasswordGame";
-            this.tbxPasswordGame.Size = new System.Drawing.Size(149, 22);
+            this.tbxPasswordGame.Size = new System.Drawing.Size(113, 20);
             this.tbxPasswordGame.TabIndex = 3;
             this.tbxPasswordGame.TextChanged += new System.EventHandler(this.CheckInput);
             this.tbxPasswordGame.Enter += new System.EventHandler(this.VerifyEmptyFields);
             // 
             // tbxPlayerName
             // 
-            this.tbxPlayerName.Location = new System.Drawing.Point(31, 84);
-            this.tbxPlayerName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxPlayerName.Location = new System.Drawing.Point(23, 68);
             this.tbxPlayerName.Name = "tbxPlayerName";
-            this.tbxPlayerName.Size = new System.Drawing.Size(149, 22);
+            this.tbxPlayerName.Size = new System.Drawing.Size(113, 20);
             this.tbxPlayerName.TabIndex = 2;
             this.tbxPlayerName.TextChanged += new System.EventHandler(this.CheckInput);
             this.tbxPlayerName.Enter += new System.EventHandler(this.VerifyEmptyFields);
@@ -182,20 +182,18 @@
             // lblPasswordGame
             // 
             this.lblPasswordGame.AutoSize = true;
-            this.lblPasswordGame.Location = new System.Drawing.Point(36, 135);
-            this.lblPasswordGame.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPasswordGame.Location = new System.Drawing.Point(27, 110);
             this.lblPasswordGame.Name = "lblPasswordGame";
-            this.lblPasswordGame.Size = new System.Drawing.Size(110, 16);
+            this.lblPasswordGame.Size = new System.Drawing.Size(88, 13);
             this.lblPasswordGame.TabIndex = 1;
             this.lblPasswordGame.Text = "Senha da partida";
             // 
             // lblPlayerName
             // 
             this.lblPlayerName.AutoSize = true;
-            this.lblPlayerName.Location = new System.Drawing.Point(36, 64);
-            this.lblPlayerName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPlayerName.Location = new System.Drawing.Point(27, 52);
             this.lblPlayerName.Name = "lblPlayerName";
-            this.lblPlayerName.Size = new System.Drawing.Size(113, 16);
+            this.lblPlayerName.Size = new System.Drawing.Size(88, 13);
             this.lblPlayerName.TabIndex = 0;
             this.lblPlayerName.Text = "Nome do jogador";
             // 
@@ -204,10 +202,9 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(20, 59);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(15, 48);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 29);
+            this.label4.Size = new System.Drawing.Size(17, 24);
             this.label4.TabIndex = 12;
             this.label4.Text = "*";
             // 
@@ -216,36 +213,23 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(21, 132);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(16, 107);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 29);
+            this.label1.Size = new System.Drawing.Size(17, 24);
             this.label1.TabIndex = 13;
             this.label1.Text = "*";
             // 
-            // btnInitGame
-            // 
-            this.btnInitGame.Enabled = false;
-            this.btnInitGame.Location = new System.Drawing.Point(31, 356);
-            this.btnInitGame.Margin = new System.Windows.Forms.Padding(4);
-            this.btnInitGame.Name = "btnInitGame";
-            this.btnInitGame.Size = new System.Drawing.Size(113, 37);
-            this.btnInitGame.TabIndex = 14;
-            this.btnInitGame.Text = "Iniciar Partida";
-            this.btnInitGame.UseVisualStyleBackColor = true;
-            this.btnInitGame.Click += new System.EventHandler(this.btnInitGame_Click);
-            // 
             // LoginGame
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 604);
+            this.ClientSize = new System.Drawing.Size(754, 491);
             this.Controls.Add(this.pnlInputToLogin);
             this.Controls.Add(this.btnBackToListGames);
             this.Controls.Add(this.pnlGameInfo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1021, 641);
+            this.MinimumSize = new System.Drawing.Size(770, 528);
             this.Name = "LoginGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LoginGame";
             this.pnlGameInfo.ResumeLayout(false);
             this.pnlGameInfo.PerformLayout();

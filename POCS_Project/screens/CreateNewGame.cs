@@ -15,6 +15,7 @@ namespace POCS_Project.screens
     public partial class CreateNewGame : Form
     {
         private readonly GameController _gameController;
+        private string groupName = "Bratislava";
 
         public CreateNewGame()
         {
@@ -31,7 +32,7 @@ namespace POCS_Project.screens
         {
             try
             {
-            _gameController.Create(tbxNameGame.Text, tbxPasswordGame.Text, tbxNameGroup.Text);
+            _gameController.Create(tbxNameGame.Text, tbxPasswordGame.Text, groupName);
             this.ChangeScreen(new SelectAnExistentGame());
             }
             catch (Exception error)
@@ -43,7 +44,7 @@ namespace POCS_Project.screens
 
         private void CheckInput(object sender, EventArgs e)
         {
-            if (tbxNameGame.Text.Trim().Length > 0 && tbxNameGroup.Text.Trim().Length > 0 && tbxPasswordGame.Text.Trim().Length > 0)
+            if (tbxNameGame.Text.Trim().Length > 0 && groupName.Trim().Length > 0 && tbxPasswordGame.Text.Trim().Length > 0)
                 CreateNewGameBtn.Enabled = true;
             else 
                 CreateNewGameBtn.Enabled = false;
@@ -58,7 +59,7 @@ namespace POCS_Project.screens
                 ErrorsMessageLabel.Visible = true;
                 if(tbxNameGame.Text == null || tbxNameGame.Text == "")
                     message = message.Replace("[Field]","um nome");
-                if (tbxNameGroup.Text == null || tbxNameGroup.Text == "")
+                if (groupName == null || groupName == "")
                     message = message.Replace("[Field]","o nome do grupo");
                 if(tbxPasswordGame.Text == null||tbxPasswordGame.Text == "")
                     message = message.Replace("[Field]","a senha");

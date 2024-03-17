@@ -36,20 +36,23 @@
             this.lblPlayerTimeIndicator.AutoSize = true;
             this.lblPlayerTimeIndicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerTimeIndicator.ForeColor = System.Drawing.Color.Maroon;
-            this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(12, 9);
+            this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(9, 7);
+            this.lblPlayerTimeIndicator.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlayerTimeIndicator.Name = "lblPlayerTimeIndicator";
-            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(273, 20);
+            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(230, 17);
             this.lblPlayerTimeIndicator.TabIndex = 0;
             this.lblPlayerTimeIndicator.Text = "[PLAYER] realiza a primeira jogada";
             // 
             // GameScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 594);
+            this.ClientSize = new System.Drawing.Size(754, 489);
             this.Controls.Add(this.lblPlayerTimeIndicator);
-            this.MinimumSize = new System.Drawing.Size(1021, 641);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(770, 528);
             this.Name = "GameScreen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Game";
             this.ResumeLayout(false);
             this.PerformLayout();

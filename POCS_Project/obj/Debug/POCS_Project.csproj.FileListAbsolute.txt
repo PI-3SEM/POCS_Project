@@ -181,3 +181,4 @@ C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\obj\Deb
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\obj\Debug\POCS_Project.screens.LoginGame.resources
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\obj\Debug\POCS_Project.screens.LoginGame.resources
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\obj\Debug\POCS_Project.screens.GameScreen.resources
+C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\obj\Debug\POCS_Project.screens.GameScreen.resources
