@@ -29,8 +29,16 @@ namespace POCS_Project.screens
 
         private void CreateNewGameBtn_Click(object sender, EventArgs e)
         {
-            _gameController.Create(tbxNameGame.Text, tbxNameGroup.Text, tbxPasswordGame.Text);
+            try
+            {
+            _gameController.Create(tbxNameGame.Text, tbxPasswordGame.Text, tbxNameGroup.Text);
             this.ChangeScreen(new SelectAnExistentGame());
+            }
+            catch (Exception error)
+            {
+                ErrorsMessageLabel.Text = error.Message;
+                ErrorsMessageLabel.Visible = true;
+            }
         }
 
         private void CheckInput(object sender, EventArgs e)

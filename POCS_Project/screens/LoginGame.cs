@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using POCS_Project.controllers;
 using POCS_Project.entities;
 using POCS_Project.utils;
 
@@ -14,10 +15,21 @@ namespace POCS_Project.screens
 {
     public partial class LoginGame : Form
     {
+        private readonly Game _gameData;
+
+        private readonly GameController _gameController;
+
+        private readonly PlayersController _playersController;
+
+        private Player LoggedPlayer { get; set; }
+
         public LoginGame(Game gameData)
         {
+            _gameData = gameData;
+            _playersController = new PlayersController();
+            _gameController = new GameController();
             InitializeComponent();
-            loadGameData(gameData);
+            loadGameData(_gameData);
         }
 
         private void loadGameData(Game data)
@@ -64,6 +76,38 @@ namespace POCS_Project.screens
             }
             else
                 ErrorsMessageLabel.Visible = false;
+        }
+
+        private void btnEnterInGame_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoggedPlayer = _playersController.EnterInGame(tbxPlayerName.Text, tbxPasswordGame.Text,_gameData.Id);
+                _gameData.Players = _playersController.GetAllPlayers(_gameData.Id);
+                loadGameData(_gameData);
+                tbxPlayerName.Enabled = false;
+                tbxPasswordGame.Enabled = false;
+                btnEnterInGame.Enabled = false;
+                btnInitGame.Enabled = true;
+            }
+            catch(Exception error)
+            {
+                ErrorsMessageLabel.Text = error.Message;
+            }
+        }
+
+        private void btnInitGame_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var idInitPlayer = _gameController.initGame(LoggedPlayer.Id, LoggedPlayer.Password);
+                var gameScreen = new GameScreen(_gameData.Players, idInitPlayer);
+                this.ChangeScreen(gameScreen);
+            }
+            catch(Exception error)
+            {
+                ErrorsMessageLabel.Text = error.Message;
+            }
         }
     }
 }

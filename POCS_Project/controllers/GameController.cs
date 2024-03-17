@@ -12,6 +12,12 @@ namespace POCS_Project.controllers
 {
     public class GameController
     {
+        private readonly PlayersController _playersController;
+
+        public GameController()
+        {
+            _playersController = new PlayersController();
+        }
 
         public List<Game> Index()
         {
@@ -28,7 +34,7 @@ namespace POCS_Project.controllers
                     Id = id,
                     Name = arrGameData[1],
                     Situation = arrGameData[3].SearchEnumByDisplayName<GameSituation>(),
-                    Players = GetAllPlayers(id)
+                    Players = _playersController.GetAllPlayers(id)
                 });
             }
             return response;
@@ -36,28 +42,30 @@ namespace POCS_Project.controllers
     
         public int Create(string nameGame, string Group, string password)
         {
-            return Convert.ToInt32(Jogo.CriarPartida(nameGame, Group, password));
-        }
-
-        private List<Player> GetAllPlayers(int id)
-        {
-            var response = new List<Player>();
-            string strPlayers = Jogo.ListarJogadores(id);
-            string[] arrStrPlayers = Regex.Split(strPlayers, "\r\n")
-                    .Where(x => x.Count() > 0)
-                    .ToArray();
-            foreach (string strPlayer in arrStrPlayers)
+            string response = Jogo.CriarPartida(nameGame, Group, password);
+            try
             {
-                string[] arrPlayer = Regex.Split(strPlayer, ",");
-                response.Add(new Player
-                {
-                    Id = Convert.ToInt32(arrPlayer[0]),
-                    Name = arrPlayer[1],
-                    Record = Convert.ToInt32(arrPlayer[2])
-                });
+                return Convert.ToInt32(response);
             }
-            return response;
+            catch
+            {
+                throw new Exception(response);
+            }
         }
 
+        public int initGame(int idPlayer, string passwordPlayer)
+        {
+            // retorno: id do jogador a fazer a primeira jogada
+            var response = Jogo.IniciarPartida(idPlayer,passwordPlayer);
+            try
+            {
+                return Convert.ToInt32(response);
+            }
+            catch
+            {
+                throw new Exception(response);
+            }
+        }
+        
     }
 }
