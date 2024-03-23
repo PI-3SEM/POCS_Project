@@ -53,7 +53,7 @@ namespace POCS_Project.controllers
             }
         }
 
-        public int initGame(int idPlayer, string passwordPlayer)
+        public int InitGame(int idPlayer, string passwordPlayer)
         {
             // retorno: id do jogador a fazer a primeira jogada
             var response = Jogo.IniciarPartida(idPlayer,passwordPlayer);
@@ -67,5 +67,27 @@ namespace POCS_Project.controllers
             }
         }
         
+        public List<Card> GetCards(List<Player>playersInGame, int idPartida)
+        {
+            var response = new List<Card>();
+            try
+            {
+                foreach(string strCard in Regex.Split(Jogo.ConsultarMao(idPartida),"\r\n"))
+                {
+                    string[] cardData = Regex.Split(strCard, ",");
+                    response.Add(new Card
+                    {
+                        Owner = playersInGame.FirstOrDefault(x=>x.Id == Convert.ToInt32(cardData[0])),
+                        Order = Convert.ToInt32(cardData[1]),
+                        Suit = (Suits)cardData[2][0]
+                    });
+                }
+            }
+            catch(Exception e) 
+            {
+                Console.WriteLine(e.Message);
+            }
+            return response;
+        }
     }
 }

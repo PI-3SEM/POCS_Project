@@ -29,24 +29,35 @@
         private void InitializeComponent()
         {
             this.lblPlayerTimeIndicator = new System.Windows.Forms.Label();
+            this.pnlGame = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // lblPlayerTimeIndicator
             // 
             this.lblPlayerTimeIndicator.AutoSize = true;
+            this.lblPlayerTimeIndicator.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblPlayerTimeIndicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerTimeIndicator.ForeColor = System.Drawing.Color.Maroon;
-            this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(12, 9);
+            this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(0, 0);
             this.lblPlayerTimeIndicator.Name = "lblPlayerTimeIndicator";
             this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(273, 20);
             this.lblPlayerTimeIndicator.TabIndex = 0;
             this.lblPlayerTimeIndicator.Text = "[PLAYER] realiza a primeira jogada";
+            // 
+            // pnlGame
+            // 
+            this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlGame.Location = new System.Drawing.Point(0, 20);
+            this.pnlGame.Name = "pnlGame";
+            this.pnlGame.Size = new System.Drawing.Size(1003, 574);
+            this.pnlGame.TabIndex = 1;
             // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1003, 594);
+            this.Controls.Add(this.pnlGame);
             this.Controls.Add(this.lblPlayerTimeIndicator);
             this.MinimumSize = new System.Drawing.Size(1021, 641);
             this.Name = "GameScreen";
@@ -59,5 +70,6 @@
         #endregion
 
         private System.Windows.Forms.Label lblPlayerTimeIndicator;
+        private System.Windows.Forms.Panel pnlGame;
     }
 }

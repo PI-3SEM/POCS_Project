@@ -100,8 +100,8 @@ namespace POCS_Project.screens
         {
             try
             {
-                var idInitPlayer = _gameController.initGame(LoggedPlayer.Id, LoggedPlayer.Password);
-                var gameScreen = new GameScreen(_gameData.Players, idInitPlayer);
+                var idInitPlayer = _gameController.InitGame(LoggedPlayer.Id, LoggedPlayer.Password);
+                var gameScreen = new GameScreen(idInitPlayer, LoggedPlayer, _gameData);
                 this.ChangeScreen(gameScreen);
             }
             catch(Exception error)

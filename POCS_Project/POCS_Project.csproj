@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="controllers\GameController.cs" />
     <Compile Include="controllers\PlayersController.cs" />
+    <Compile Include="entities\Card.cs" />
     <Compile Include="entities\Game.cs" />
     <Compile Include="entities\Player.cs" />
     <Compile Include="screens\CreateNewGame.cs">
