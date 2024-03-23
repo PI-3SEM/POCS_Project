@@ -30,6 +30,8 @@
         {
             this.lblPlayerTimeIndicator = new System.Windows.Forms.Label();
             this.pnlGame = new System.Windows.Forms.Panel();
+            this.btnProvBet0 = new System.Windows.Forms.Button();
+            this.pnlGame.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblPlayerTimeIndicator
@@ -46,11 +48,22 @@
             // 
             // pnlGame
             // 
+            this.pnlGame.Controls.Add(this.btnProvBet0);
             this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlGame.Location = new System.Drawing.Point(0, 20);
             this.pnlGame.Name = "pnlGame";
             this.pnlGame.Size = new System.Drawing.Size(1003, 574);
             this.pnlGame.TabIndex = 1;
+            // 
+            // btnProvBet0
+            // 
+            this.btnProvBet0.Location = new System.Drawing.Point(495, 281);
+            this.btnProvBet0.Name = "btnProvBet0";
+            this.btnProvBet0.Size = new System.Drawing.Size(72, 30);
+            this.btnProvBet0.TabIndex = 0;
+            this.btnProvBet0.Text = "Apostar 0";
+            this.btnProvBet0.UseVisualStyleBackColor = true;
+            this.btnProvBet0.Click += new System.EventHandler(this.btnProvBet0_Click);
             // 
             // GameScreen
             // 
@@ -62,6 +75,7 @@
             this.MinimumSize = new System.Drawing.Size(1021, 641);
             this.Name = "GameScreen";
             this.Text = "Game";
+            this.pnlGame.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -71,5 +85,6 @@
 
         private System.Windows.Forms.Label lblPlayerTimeIndicator;
         private System.Windows.Forms.Panel pnlGame;
+        private System.Windows.Forms.Button btnProvBet0;
     }
 }

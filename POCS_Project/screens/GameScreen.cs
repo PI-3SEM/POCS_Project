@@ -1,4 +1,6 @@
-﻿using POCS_Project.controllers;
+﻿using MagicTrickServer;
+using Org.BouncyCastle.Crypto;
+using POCS_Project.controllers;
 using POCS_Project.entities;
 using POCS_Project.utils;
 using System;
@@ -8,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,6 +23,7 @@ namespace POCS_Project.screens
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
+        private List<Card> PlayedCards = new List<Card>();
 
         public GameScreen(int idInitPlayer,Player loggedPlayer ,Game game)
         {
@@ -34,7 +38,7 @@ namespace POCS_Project.screens
             }
 
             InitializeComponent();
-            lblPlayerTimeIndicator.Text = lblPlayerTimeIndicator.Text.Replace("[PLAYER]", $"{PlayersInGame.FirstOrDefault(x => x.Key.Id == idInitPlayer).Key.Name}, tendo como id {idInitPlayer}");
+            lblPlayerTimeIndicator.Text = lblPlayerTimeIndicator.Text.Replace("[PLAYER]", $"{PlayersInGame.FirstOrDefault(x => x.Key.Id == idInitPlayer).Key.Name}, tendo como id {idInitPlayer}, é vc:{idInitPlayer == LoggedUser.Id}");
             RenderPlayersGridCards();
         }
 
@@ -59,8 +63,14 @@ namespace POCS_Project.screens
             {
                 Label provCard = new Label { 
                     Text = $"naipe: {card.Suit.GetDisplayName()}\norder:{card.Order}" ,
-                    Dock = DockStyle.Fill
+                    Dock = DockStyle.Fill,
                 };
+                // if(player == LoggedUser)
+                //{
+                    provCard.Click += SendCard;
+                    provCard.Cursor = Cursors.Hand;
+                    provCard.Name = $"{card.Order},{card.Owner.Id}";
+                //}
 
                 if (grid.Dock == DockStyle.Top || grid.Dock == DockStyle.Bottom)
                 {
@@ -82,6 +92,53 @@ namespace POCS_Project.screens
             }
         }
 
+        private bool VerifyTime()
+        {
+            bool response = true;
+            string strVerifyTime = Jogo.VerificarVez(_gameData.Id);
+            string[] dataVerifyTime = Regex.Split(strVerifyTime, "\r\n");
+            Array.Resize(ref dataVerifyTime, dataVerifyTime.Length - 1);
+            string[] gameData = Regex.Split(dataVerifyTime[0], ",");
+            
+            if (gameData.Length > 0 && Convert.ToInt32(gameData[1]) == LoggedUser.Id)
+                response = true;
+            
+            lblPlayerTimeIndicator.Text = lblPlayerTimeIndicator.Text.Replace("[PLAYER]", $"{PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}, tendo como id {Convert.ToInt32(gameData[1])}");
+            if (dataVerifyTime.Count() > 1)
+            {
+                dataVerifyTime = dataVerifyTime.Skip(1).ToArray();
+                List<Card> playedCards = new List<Card>();
+                foreach(string cardData in dataVerifyTime)
+                {
+                    var data = Regex.Split(cardData.Substring(2),",");
+                    playedCards.Add(new Card
+                    {
+                        Owner = PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(data[0])).Key,
+                        Suit = (Suits)data[1][0],
+                        Value = Convert.ToInt32(data[2])
+                    });
+                }
+                PlayedCards = playedCards;
+            }
+
+            return response;
+        }
+
+        private void SendCard(object sender, EventArgs e)
+        {   
+            Label clickedCard = sender as Label;
+            string[] cardData = Regex.Split(clickedCard.Name, ",");
+            int cardId = Convert.ToInt32(cardData[0]);
+            int ownerId = Convert.ToInt32(cardData[1]);
+            if (VerifyTime()) {
+                Player keyLogged = PlayersInGame.Keys.FirstOrDefault(x => x.Id == LoggedUser.Id);
+                int cardValue = Convert.ToInt32(Jogo.Jogar(ownerId, LoggedUser.Password, cardId));
+                int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
+                PlayersInGame[keyLogged][indexCard].Value = cardValue;
+                lblPlayerTimeIndicator.Text = $"Você jogou uma carta com valor {cardId}";
+            };
+        }
+
         private void RenderPlayersGridCards() {
             foreach(var playersGridCards in PlayersGridCards)
             {
@@ -97,6 +154,12 @@ namespace POCS_Project.screens
                 pnlGame.Controls.Add(playersGridCards.Value);
                 RenderCard(playersGridCards.Key, playersGridCards.Value);
             }
+        }
+
+        private void btnProvBet0_Click(object sender, EventArgs e)
+        {
+            Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
+            VerifyTime();
         }
     }
 }

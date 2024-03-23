@@ -12,6 +12,7 @@ namespace POCS_Project.entities
         public Player Owner { get; set; }
         public int Order { get; set; }
         public Suits Suit { get; set; }
+        public int Value { get; set; }
     }
     public enum Suits{
         [Display(Name="Ouro")]
