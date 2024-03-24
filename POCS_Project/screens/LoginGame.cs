@@ -100,12 +100,15 @@ namespace POCS_Project.screens
         {
             try
             {
+                _gameData.Players = _playersController.GetAllPlayers(_gameData.Id);
                 var idInitPlayer = _gameController.InitGame(LoggedPlayer.Id, LoggedPlayer.Password);
-                var gameScreen = new GameScreen(idInitPlayer, LoggedPlayer, _gameData);
+                var gameScreen = new GameScreen(LoggedPlayer, _gameData);
                 this.ChangeScreen(gameScreen);
             }
             catch(Exception error)
             {
+                if (error.Message.Contains("Partida não está aberta"))
+                    this.ChangeScreen(new GameScreen(LoggedPlayer, _gameData));
                 ErrorsMessageLabel.Text = error.Message;
             }
         }

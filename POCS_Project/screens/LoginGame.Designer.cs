@@ -36,6 +36,7 @@
             this.btnBackToListGames = new System.Windows.Forms.Button();
             this.btnEnterInGame = new System.Windows.Forms.Button();
             this.pnlInputToLogin = new System.Windows.Forms.Panel();
+            this.btnInitGame = new System.Windows.Forms.Button();
             this.ErrorsMessageLabel = new System.Windows.Forms.Label();
             this.tbxPasswordGame = new System.Windows.Forms.TextBox();
             this.tbxPlayerName = new System.Windows.Forms.TextBox();
@@ -43,7 +44,6 @@
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnInitGame = new System.Windows.Forms.Button();
             this.pnlGameInfo.SuspendLayout();
             this.pnlInputToLogin.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +58,7 @@
             this.pnlGameInfo.Controls.Add(this.lblGameName);
             this.pnlGameInfo.Controls.Add(this.lblGameId);
             this.pnlGameInfo.Location = new System.Drawing.Point(35, 33);
-            this.pnlGameInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlGameInfo.Margin = new System.Windows.Forms.Padding(4);
             this.pnlGameInfo.Name = "pnlGameInfo";
             this.pnlGameInfo.Size = new System.Drawing.Size(453, 414);
             this.pnlGameInfo.TabIndex = 0;
@@ -107,7 +107,7 @@
             // 
             this.btnBackToListGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnBackToListGames.Location = new System.Drawing.Point(35, 523);
-            this.btnBackToListGames.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBackToListGames.Margin = new System.Windows.Forms.Padding(4);
             this.btnBackToListGames.Name = "btnBackToListGames";
             this.btnBackToListGames.Size = new System.Drawing.Size(77, 37);
             this.btnBackToListGames.TabIndex = 1;
@@ -119,7 +119,7 @@
             // 
             this.btnEnterInGame.Enabled = false;
             this.btnEnterInGame.Location = new System.Drawing.Point(31, 206);
-            this.btnEnterInGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnEnterInGame.Margin = new System.Windows.Forms.Padding(4);
             this.btnEnterInGame.Name = "btnEnterInGame";
             this.btnEnterInGame.Size = new System.Drawing.Size(113, 37);
             this.btnEnterInGame.TabIndex = 2;
@@ -141,10 +141,22 @@
             this.pnlInputToLogin.Controls.Add(this.label4);
             this.pnlInputToLogin.Controls.Add(this.label1);
             this.pnlInputToLogin.Location = new System.Drawing.Point(579, 33);
-            this.pnlInputToLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlInputToLogin.Margin = new System.Windows.Forms.Padding(4);
             this.pnlInputToLogin.Name = "pnlInputToLogin";
             this.pnlInputToLogin.Size = new System.Drawing.Size(404, 412);
             this.pnlInputToLogin.TabIndex = 3;
+            // 
+            // btnInitGame
+            // 
+            this.btnInitGame.Enabled = false;
+            this.btnInitGame.Location = new System.Drawing.Point(31, 356);
+            this.btnInitGame.Margin = new System.Windows.Forms.Padding(4);
+            this.btnInitGame.Name = "btnInitGame";
+            this.btnInitGame.Size = new System.Drawing.Size(113, 37);
+            this.btnInitGame.TabIndex = 14;
+            this.btnInitGame.Text = "Iniciar Partida";
+            this.btnInitGame.UseVisualStyleBackColor = true;
+            this.btnInitGame.Click += new System.EventHandler(this.btnInitGame_Click);
             // 
             // ErrorsMessageLabel
             // 
@@ -162,7 +174,7 @@
             // tbxPasswordGame
             // 
             this.tbxPasswordGame.Location = new System.Drawing.Point(31, 155);
-            this.tbxPasswordGame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxPasswordGame.Margin = new System.Windows.Forms.Padding(4);
             this.tbxPasswordGame.Name = "tbxPasswordGame";
             this.tbxPasswordGame.Size = new System.Drawing.Size(149, 22);
             this.tbxPasswordGame.TabIndex = 3;
@@ -172,7 +184,7 @@
             // tbxPlayerName
             // 
             this.tbxPlayerName.Location = new System.Drawing.Point(31, 84);
-            this.tbxPlayerName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbxPlayerName.Margin = new System.Windows.Forms.Padding(4);
             this.tbxPlayerName.Name = "tbxPlayerName";
             this.tbxPlayerName.Size = new System.Drawing.Size(149, 22);
             this.tbxPlayerName.TabIndex = 2;
@@ -223,18 +235,6 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "*";
             // 
-            // btnInitGame
-            // 
-            this.btnInitGame.Enabled = false;
-            this.btnInitGame.Location = new System.Drawing.Point(31, 356);
-            this.btnInitGame.Margin = new System.Windows.Forms.Padding(4);
-            this.btnInitGame.Name = "btnInitGame";
-            this.btnInitGame.Size = new System.Drawing.Size(113, 37);
-            this.btnInitGame.TabIndex = 14;
-            this.btnInitGame.Text = "Iniciar Partida";
-            this.btnInitGame.UseVisualStyleBackColor = true;
-            this.btnInitGame.Click += new System.EventHandler(this.btnInitGame_Click);
-            // 
             // LoginGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -243,7 +243,7 @@
             this.Controls.Add(this.pnlInputToLogin);
             this.Controls.Add(this.btnBackToListGames);
             this.Controls.Add(this.pnlGameInfo);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1021, 641);
             this.Name = "LoginGame";
             this.Text = "LoginGame";

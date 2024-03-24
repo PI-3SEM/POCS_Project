@@ -21,12 +21,14 @@ namespace POCS_Project.screens
         private readonly Game _gameData;
         private readonly GameController _gameController;
         private readonly Player LoggedUser;
+        private int IdInitPlayer;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
 
-        public GameScreen(int idInitPlayer,Player loggedPlayer ,Game game)
+        public GameScreen(Player loggedPlayer ,Game game)
         {
+            InitializeComponent();
             LoggedUser = loggedPlayer;
             _gameController = new GameController();
             _gameData = game;
@@ -36,9 +38,7 @@ namespace POCS_Project.screens
                 PlayersInGame.Add(player, cards.Where(x => x.Owner == player).ToList());
                 PlayersGridCards.Add(player, new TableLayoutPanel { CellBorderStyle = TableLayoutPanelCellBorderStyle.Single });
             }
-
-            InitializeComponent();
-            lblPlayerTimeIndicator.Text = lblPlayerTimeIndicator.Text.Replace("[PLAYER]", $"{PlayersInGame.FirstOrDefault(x => x.Key.Id == idInitPlayer).Key.Name}, tendo como id {idInitPlayer}, é vc:{idInitPlayer == LoggedUser.Id}");
+            VerifyTime();
             RenderPlayersGridCards();
         }
 
@@ -99,11 +99,21 @@ namespace POCS_Project.screens
             string[] dataVerifyTime = Regex.Split(strVerifyTime, "\r\n");
             Array.Resize(ref dataVerifyTime, dataVerifyTime.Length - 1);
             string[] gameData = Regex.Split(dataVerifyTime[0], ",");
+            IdInitPlayer = Convert.ToInt32(gameData[1]);
+
+            if (gameData.Length > 0)
+            {
+                if (IdInitPlayer == LoggedUser.Id)
+                {
+                    response = true;
+                    lblPlayerTimeIndicator.Text = $"É a vez de {PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}, tendo como id {Convert.ToInt32(gameData[1])}";
+                }
+                else
+                    lblPlayerTimeIndicator.Text = "É a sua vez!";
+                
+            }
+
             
-            if (gameData.Length > 0 && Convert.ToInt32(gameData[1]) == LoggedUser.Id)
-                response = true;
-            
-            lblPlayerTimeIndicator.Text = lblPlayerTimeIndicator.Text.Replace("[PLAYER]", $"{PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}, tendo como id {Convert.ToInt32(gameData[1])}");
             if (dataVerifyTime.Count() > 1)
             {
                 dataVerifyTime = dataVerifyTime.Skip(1).ToArray();
@@ -132,7 +142,8 @@ namespace POCS_Project.screens
             int ownerId = Convert.ToInt32(cardData[1]);
             if (VerifyTime()) {
                 Player keyLogged = PlayersInGame.Keys.FirstOrDefault(x => x.Id == LoggedUser.Id);
-                int cardValue = Convert.ToInt32(Jogo.Jogar(ownerId, LoggedUser.Password, cardId));
+                string playResult = Jogo.Jogar(ownerId, LoggedUser.Password, cardId);
+                int cardValue = Convert.ToInt32(playResult);
                 int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
                 PlayersInGame[keyLogged][indexCard].Value = cardValue;
                 lblPlayerTimeIndicator.Text = $"Você jogou uma carta com valor {cardId}";
