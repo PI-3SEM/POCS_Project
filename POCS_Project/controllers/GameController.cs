@@ -22,7 +22,7 @@ namespace POCS_Project.controllers
         public List<Game> Index()
         {
             var response = new List<Game>();
-            string[] arrStrGames = Regex.Split(Jogo.ListarPartidas("T"), "\r\n")
+            string[] arrStrGames = Regex.Split(Jogo.ListarPartidas("A"), "\r\n")
                 .Where(x=>x.Count() > 0)
                 .ToArray();
             foreach(string game in arrStrGames)

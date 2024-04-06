@@ -4,10 +4,12 @@ using POCS_Project.controllers;
 using POCS_Project.entities;
 using POCS_Project.utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -25,6 +27,7 @@ namespace POCS_Project.screens
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
+        private CardStyle cardStyle = new CardStyle();
 
         public GameScreen(Player loggedPlayer ,Game game)
         {
@@ -58,36 +61,56 @@ namespace POCS_Project.screens
                 grid.RowCount = 6;
                 grid.ColumnCount = 2;
             }
-            
-            foreach(Card card in cards)
+
+            foreach (Card card in cards)
             {
-                Label provCard = new Label { 
-                    Text = $"naipe: {card.Suit.GetDisplayName()}\norder:{card.Order}" ,
-                    Dock = DockStyle.Fill,
+                Label cardLabel = new Label
+                {
+                    Text = $"naipe: {card.Suit.GetDisplayName()}\norder:{card.Order}",
+                    //Dock = DockStyle.Fill,
                 };
+
+                Panel pbCard = new Panel();
+                {
+                    BackgroundImageLayout = ImageLayout.Stretch;
+                    
+                };
+                pbCard.MaximumSize = new Size(cardStyle.x, cardStyle.y);
+
+                foreach (string item in cardStyle.paths)
+                {
+                    if (item.Contains(card.Suit.GetDisplayName()))
+                    {
+                        Image img = Image.FromFile(item);
+                        pbCard.BackgroundImage = img;
+                        
+                    }
+                }
+
+
                 // if(player == LoggedUser)
                 //{
-                    provCard.Click += SendCard;
-                    provCard.Cursor = Cursors.Hand;
-                    provCard.Name = $"{card.Order},{card.Owner.Id}";
+                    pbCard.Click += SendCard;
+                    pbCard.Cursor = Cursors.Hand;
+                    pbCard.Name = $"{card.Order},{card.Owner.Id}";
                 //}
 
                 if (grid.Dock == DockStyle.Top || grid.Dock == DockStyle.Bottom)
                 {
                     if (indexColumn >= 6)
                     {
-                        indexRow = 1;
+                        indexRow = 2;
                         indexColumn = 0;
                     }
-                    grid.Controls.Add(provCard, indexColumn, indexRow);
+                    grid.Controls.Add(pbCard, indexColumn, indexRow);
                     indexColumn++;
                 }
                 else
                 {
                     
-                    indexColumn = indexColumn == 0 ? 1 : 0;
+                    indexColumn = indexColumn == 0 ? 2 : 0;
                     if (indexColumn == 0) indexRow++;
-                    grid.Controls.Add(provCard, indexColumn, indexRow);
+                    grid.Controls.Add(pbCard, indexColumn, indexRow);
                 }
             }
         }
@@ -109,7 +132,7 @@ namespace POCS_Project.screens
                     lblPlayerTimeIndicator.Text = $"É a vez de {PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}, tendo como id {Convert.ToInt32(gameData[1])}";
                 }
                 else
-                    lblPlayerTimeIndicator.Text = "É a sua vez!";
+                    lblPlayerTimeIndicator.Text = "Vez do outro!";
                 
             }
 
@@ -136,18 +159,25 @@ namespace POCS_Project.screens
 
         private void SendCard(object sender, EventArgs e)
         {   
-            Label clickedCard = sender as Label;
+            Panel clickedCard = sender as Panel;
             string[] cardData = Regex.Split(clickedCard.Name, ",");
             int cardId = Convert.ToInt32(cardData[0]);
             int ownerId = Convert.ToInt32(cardData[1]);
-            if (VerifyTime()) {
-                Player keyLogged = PlayersInGame.Keys.FirstOrDefault(x => x.Id == LoggedUser.Id);
-                string playResult = Jogo.Jogar(ownerId, LoggedUser.Password, cardId);
-                int cardValue = Convert.ToInt32(playResult);
-                int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
-                PlayersInGame[keyLogged][indexCard].Value = cardValue;
-                lblPlayerTimeIndicator.Text = $"Você jogou uma carta com valor {cardId}";
-            };
+            try
+            {
+                if (VerifyTime()) {
+                    Player keyLogged = PlayersInGame.Keys.FirstOrDefault(x => x.Id == LoggedUser.Id);
+                    string playResult = Jogo.Jogar(ownerId, LoggedUser.Password, cardId);
+                    int cardValue = Convert.ToInt32(playResult);
+                    int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
+                    PlayersInGame[keyLogged][indexCard].Value = cardValue;
+                    lblPlayerTimeIndicator.Text = $"Você jogou uma carta com valor {cardId}";
+                }
+            }
+            catch
+            {
+                lblPlayerTimeIndicator.Text = $"Não é a sua vez!!";
+            }
         }
 
         private void RenderPlayersGridCards() {

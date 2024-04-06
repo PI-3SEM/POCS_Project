@@ -192,5 +192,24 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Copas.png" />
+    <Resource Include="bin\Debug\Espadas.png" />
+    <Resource Include="bin\Debug\Estrela.png" />
+    <Resource Include="bin\Debug\Lua.png" />
+    <Resource Include="bin\Debug\Ouros.png" />
+    <Resource Include="bin\Debug\Paus.png" />
+    <Resource Include="bin\Debug\Triângulo.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="bin\Debug\Assets\Copas.png" />
+    <Content Include="bin\Debug\Assets\Espadas.png" />
+    <Content Include="bin\Debug\Assets\Estrela.png" />
+    <Content Include="bin\Debug\Assets\Lua.png" />
+    <Content Include="bin\Debug\Assets\Ouros.png" />
+    <Content Include="bin\Debug\Assets\Paus.png" />
+    <Content Include="bin\Debug\Assets\Triângulo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

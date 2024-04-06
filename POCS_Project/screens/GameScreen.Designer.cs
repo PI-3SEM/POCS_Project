@@ -41,8 +41,9 @@
             this.lblPlayerTimeIndicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerTimeIndicator.ForeColor = System.Drawing.Color.Maroon;
             this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(0, 0);
+            this.lblPlayerTimeIndicator.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlayerTimeIndicator.Name = "lblPlayerTimeIndicator";
-            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(273, 20);
+            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(230, 17);
             this.lblPlayerTimeIndicator.TabIndex = 0;
             this.lblPlayerTimeIndicator.Text = "[PLAYER] realiza a primeira jogada";
             // 
@@ -50,16 +51,18 @@
             // 
             this.pnlGame.Controls.Add(this.btnProvBet0);
             this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGame.Location = new System.Drawing.Point(0, 20);
+            this.pnlGame.Location = new System.Drawing.Point(0, 17);
+            this.pnlGame.Margin = new System.Windows.Forms.Padding(2);
             this.pnlGame.Name = "pnlGame";
-            this.pnlGame.Size = new System.Drawing.Size(1003, 574);
+            this.pnlGame.Size = new System.Drawing.Size(754, 472);
             this.pnlGame.TabIndex = 1;
             // 
             // btnProvBet0
             // 
-            this.btnProvBet0.Location = new System.Drawing.Point(495, 281);
+            this.btnProvBet0.Location = new System.Drawing.Point(371, 228);
+            this.btnProvBet0.Margin = new System.Windows.Forms.Padding(2);
             this.btnProvBet0.Name = "btnProvBet0";
-            this.btnProvBet0.Size = new System.Drawing.Size(72, 30);
+            this.btnProvBet0.Size = new System.Drawing.Size(54, 24);
             this.btnProvBet0.TabIndex = 0;
             this.btnProvBet0.Text = "Apostar 0";
             this.btnProvBet0.UseVisualStyleBackColor = true;
@@ -67,12 +70,13 @@
             // 
             // GameScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 594);
+            this.ClientSize = new System.Drawing.Size(754, 489);
             this.Controls.Add(this.pnlGame);
             this.Controls.Add(this.lblPlayerTimeIndicator);
-            this.MinimumSize = new System.Drawing.Size(1021, 641);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(770, 528);
             this.Name = "GameScreen";
             this.Text = "Game";
             this.pnlGame.ResumeLayout(false);

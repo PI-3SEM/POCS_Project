@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,14 @@ namespace POCS_Project.entities
         public Suits Suit { get; set; }
         public int Value { get; set; }
     }
+
+    public class CardStyle
+    {
+        public List<string> paths = Directory.GetFiles("Assets", "*.png").ToList();
+        public int x = 120;
+        public int y = 160;
+    }
+
     public enum Suits{
         [Display(Name="Ouro")]
         Diamonds = 'O',
