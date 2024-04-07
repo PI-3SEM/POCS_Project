@@ -120,9 +120,6 @@
     <Compile Include="entities\Card.cs" />
     <Compile Include="entities\Game.cs" />
     <Compile Include="entities\Player.cs" />
-    <Compile Include="screens\Component\RotatedCard.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="screens\CreateNewGame.cs">
       <SubType>Form</SubType>
     </Compile>

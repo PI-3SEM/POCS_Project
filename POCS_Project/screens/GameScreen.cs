@@ -2,7 +2,6 @@
 using Org.BouncyCastle.Crypto;
 using POCS_Project.controllers;
 using POCS_Project.entities;
-using POCS_Project.screens.Component;
 using POCS_Project.utils;
 using System;
 using System.Collections;
@@ -28,7 +27,7 @@ namespace POCS_Project.screens
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
-        private CardStyle cardStyle = new CardStyle();
+        private CardStyle CardStyle = new CardStyle();
 
         public GameScreen(Player loggedPlayer ,Game game)
         {
@@ -63,11 +62,6 @@ namespace POCS_Project.screens
                 grid.ColumnCount = 2;
             }
             
-            foreach (RowStyle row in grid.RowStyles)
-            {
-                row.Height = cardStyle.y;
-            }
-
             foreach (Card card in cards)
             {
 
@@ -75,9 +69,9 @@ namespace POCS_Project.screens
                 {
                     BackgroundImageLayout = ImageLayout.Center;
                 };
-                pbCard.MaximumSize = new Size(cardStyle.x, cardStyle.y);
+                pbCard.MaximumSize = new Size(CardStyle.x, CardStyle.y+5);
 
-                string item = cardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName()));
+                string item = CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName()));
                 pbCard.BackgroundImage = Image.FromFile(item);
 
 
@@ -105,6 +99,12 @@ namespace POCS_Project.screens
                     if (indexColumn == 0) indexRow++;
                     grid.Controls.Add(pbCard, indexColumn, indexRow);
                 }
+            }
+
+            foreach (RowStyle row in grid.RowStyles)
+            {
+                row.SizeType = SizeType.Absolute;
+                row.Height = CardStyle.y;
             }
         }
 
@@ -154,29 +154,8 @@ namespace POCS_Project.screens
         private void RenderSendedCards(object sender, EventArgs e)
         {
             VerifyTime();
-            foreach (Card playedCard in PlayedCards)
-            {
-                PictureBox pictureBox;
-                DockStyle positionOnTable = PlayersGridCards[playedCard.Owner].Dock;
-
-                switch(positionOnTable)
-                {
-                    case DockStyle.Left:
-                        pictureBox = new RotatedCard(playedCard);
-                        break;
-                    case DockStyle.Right:
-                        pictureBox = new RotatedCard(playedCard);
-                        break;
-                    default:  
-                        pictureBox = new PictureBox();
-                        break;
-                }
-                
-                pictureBox.Location = new Point((pnlGame.Width / 2) - (cardStyle.x/2), (pnlGame.Height / 2) - (cardStyle.y / 2));
-                pictureBox.Image = Image.FromFile(cardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(playedCard.Suit.GetDisplayName())));
-                pictureBox.Size = new Size(cardStyle.x,cardStyle.y);
-                pnlGame.Controls.Add(pictureBox);
-            };
+            if(PlayedCards.Count > 0)
+            pbPlayedCard.Image = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(PlayedCards.Last().Suit.GetDisplayName())));
         }
 
         private void SendCard(object sender, EventArgs e)
@@ -193,7 +172,6 @@ namespace POCS_Project.screens
                     int cardValue = Convert.ToInt32(playResult);
                     int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
                     PlayersInGame[keyLogged][indexCard].Value = cardValue;
-                    //lblPlayerTimeIndicator.Text = $"Você jogou uma carta com valor {cardId}";
                 }
             }
             catch
@@ -214,6 +192,7 @@ namespace POCS_Project.screens
                     playersGridCards.Value.Dock = possiblePosition[0];
                     possiblePosition = possiblePosition.Skip(1).ToArray();
                 }
+                playersGridCards.Value.Height = CardStyle.y*2-40;
                 pnlGame.Controls.Add(playersGridCards.Value);
                 RenderCard(playersGridCards.Key, playersGridCards.Value);
             }
@@ -223,16 +202,22 @@ namespace POCS_Project.screens
         {
             Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
             VerifyTime();
-            RenderSendedCards(sender, e);
         }
 
         private void GameScreen_Load(object sender, EventArgs e)
         {
-            Timer MyTimer = new Timer();
-            MyTimer.Interval = (2000);
+            var MyTimer = new Timer
+            {
+                Interval = 2500,
+                Enabled = true
+            };
             MyTimer.Tick += new EventHandler(RenderSendedCards);
-            MyTimer.Enabled = true;
             MyTimer.Start();
+        }
+
+        private void GameScreen_SizeChanged(object sender, EventArgs e)
+        {
+            pbPlayedCard.Location = new Point((pnlGame.Width / 2 - CardStyle.x / 2), (pnlGame.Height / 2 - CardStyle.y / 2));
         }
     }
 }
