@@ -94,7 +94,6 @@ namespace POCS_Project.screens
                 }
                 else
                 {
-                    
                     indexColumn = indexColumn == 0 ? 2 : 0;
                     if (indexColumn == 0) indexRow++;
                     grid.Controls.Add(pbCard, indexColumn, indexRow);
@@ -155,7 +154,12 @@ namespace POCS_Project.screens
         {
             VerifyTime();
             if(PlayedCards.Count > 0)
-            pbPlayedCard.Image = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(PlayedCards.Last().Suit.GetDisplayName())));
+            {
+                Card cardData = PlayedCards.Last();
+                Image cardImage = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(cardData.Suit.GetDisplayName())));
+                ModifyCardImageInsertValue(ref cardImage, cardData);
+                pbPlayedCard.Image = cardImage; 
+            }
         }
 
         private void SendCard(object sender, EventArgs e)
@@ -178,6 +182,24 @@ namespace POCS_Project.screens
             {
                 lblPlayerTimeIndicator.Text = $"Não é a sua vez!!";
             }
+        }
+
+        private void ModifyCardImageInsertValue(ref Image cardImage, Card cardData)
+        {
+            var grafic = Graphics.FromImage(cardImage);
+            grafic.DrawString(
+                Convert.ToString(cardData.Value),
+                new Font("arial", 10F, FontStyle.Regular),
+                Brushes.Black,
+                new PointF(10, 5)
+            );
+            grafic.DrawString(
+                Convert.ToString(cardData.Value),
+                new Font("arial", 10F, FontStyle.Regular),
+                Brushes.Black,
+                new PointF(cardImage.Width - 10, 5)
+            );
+            grafic.Dispose();
         }
 
         private void RenderPlayersGridCards() {
