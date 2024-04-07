@@ -10,7 +10,7 @@ namespace POCS_Project
         public ChoosePlayMode()
         {
             InitializeComponent();
-            lblVersion.Text = Convert.ToString(Jogo.Versao);
+            lblVersion.Text = $"Versão {Jogo.Versao}";
         }
 
         private void MultiplayerBtn_Click(object sender, EventArgs e)

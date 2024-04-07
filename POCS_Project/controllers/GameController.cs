@@ -19,12 +19,13 @@ namespace POCS_Project.controllers
             _playersController = new PlayersController();
         }
 
-        public List<Game> Index()
+        public List<Game> Index(GameSituation situation = GameSituation.All)
         {
             var response = new List<Game>();
             string[] arrStrGames = Regex.Split(Jogo.ListarPartidas("A"), "\r\n")
                 .Where(x=>x.Count() > 0)
                 .ToArray();
+
             foreach(string game in arrStrGames)
             {
                 string[] arrGameData = Regex.Split(game, ",");
@@ -37,6 +38,10 @@ namespace POCS_Project.controllers
                     Players = _playersController.GetAllPlayers(id)
                 });
             }
+
+            if (situation != GameSituation.All)
+                response.Where(x => x.Situation == situation).ToList();
+
             return response;
         }
     

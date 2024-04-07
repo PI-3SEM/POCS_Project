@@ -18,9 +18,14 @@ namespace POCS_Project.entities
 
     public class CardStyle
     {
-        public List<string> paths = Directory.GetFiles("Assets", "*.png").ToList();
-        public int x = 120;
-        public int y = 160;
+        public List<string> pathsNotPlayed = Directory.GetFiles("Assets", "*.png")
+            .Where(x=>!x.Contains("Virada"))
+            .ToList();
+        public List<string> pathsPlayed = Directory.GetFiles("Assets", "*.png")
+            .Where(x=>x.Contains("Virada"))
+            .ToList();
+        public int x = 90;
+        public int y = 130;
     }
 
     public enum Suits{

@@ -6,6 +6,7 @@ using POCS_Project.entities;
 using POCS_Project.screens;
 using POCS_Project.utils;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace POCS_Project
@@ -22,7 +23,9 @@ namespace POCS_Project
         }
         private void LoadGameList(GameSituation situation = GameSituation.All)
         {
-            var gamesList = _gameController.Index();
+            var gamesList = _gameController.Index(situation)
+                    .OrderByDescending(x => x.Id)
+                    .ToList();
 
             GamesTable.RowStyles[0].Height = 80;
             GamesTable.RowStyles[0].SizeType = SizeType.Absolute;
