@@ -45,9 +45,9 @@ namespace POCS_Project.controllers
             return response;
         }
     
-        public int Create(string nameGame, string Group, string password)
+        public int Create(string nameGame, string password, string Group = "Bratislava")
         {
-            string response = Jogo.CriarPartida(nameGame, Group, password);
+            string response = Jogo.CriarPartida(nameGame, password, Group);
             try
             {
                 return Convert.ToInt32(response);

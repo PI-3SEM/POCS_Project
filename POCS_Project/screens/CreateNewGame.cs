@@ -31,7 +31,7 @@ namespace POCS_Project.screens
         {
             try
             {
-            _gameController.Create(tbxNameGame.Text, tbxPasswordGame.Text, tbxNameGroup.Text);
+            _gameController.Create(tbxNameGame.Text, tbxPasswordGame.Text);
             this.ChangeScreen(new SelectAnExistentGame());
             }
             catch (Exception error)
@@ -43,7 +43,7 @@ namespace POCS_Project.screens
 
         private void CheckInput(object sender, EventArgs e)
         {
-            if (tbxNameGame.Text.Trim().Length > 0 && tbxNameGroup.Text.Trim().Length > 0 && tbxPasswordGame.Text.Trim().Length > 0)
+            if (tbxNameGame.Text.Trim().Length > 0 && tbxPasswordGame.Text.Trim().Length > 0)
                 CreateNewGameBtn.Enabled = true;
             else 
                 CreateNewGameBtn.Enabled = false;
@@ -58,8 +58,8 @@ namespace POCS_Project.screens
                 ErrorsMessageLabel.Visible = true;
                 if(tbxNameGame.Text == null || tbxNameGame.Text == "")
                     message = message.Replace("[Field]","um nome");
-                if (tbxNameGroup.Text == null || tbxNameGroup.Text == "")
-                    message = message.Replace("[Field]","o nome do grupo");
+                //if (tbxNameGroup.Text == null || tbxNameGroup.Text == "")
+                //    message = message.Replace("[Field]","o nome do grupo");
                 if(tbxPasswordGame.Text == null||tbxPasswordGame.Text == "")
                     message = message.Replace("[Field]","a senha");
                 ErrorsMessageLabel.Text = message;
