@@ -1,36 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\POCS_Project\\POCS_Project\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|c:\\users\\chris\\onedrive\\\u00E1rea de trabalho\\christian\\programacao\\faculdade\\pocs_project\\pocs_project\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\POCS_Project\\POCS_Project\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\POCS_Project\\POCS_Project\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-02-25T23:49:08.959Z",
-              "EditorCaption": " [Design]"
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }
