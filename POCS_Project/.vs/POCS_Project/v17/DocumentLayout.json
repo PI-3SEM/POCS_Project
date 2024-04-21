@@ -1,12 +1,86 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|c:\\users\\chris\\onedrive\\\u00E1rea de trabalho\\christian\\programacao\\faculdade\\pi-3sem-pocs\\pocs_project\\screens\\gamescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|solutionrelative:screens\\gamescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|c:\\users\\chris\\onedrive\\\u00E1rea de trabalho\\christian\\programacao\\faculdade\\pi-3sem-pocs\\pocs_project\\screens\\gamescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|solutionrelative:screens\\gamescreen.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|c:\\users\\chris\\onedrive\\\u00E1rea de trabalho\\christian\\programacao\\faculdade\\pi-3sem-pocs\\pocs_project\\screens\\logingame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|solutionrelative:screens\\logingame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|c:\\users\\chris\\onedrive\\\u00E1rea de trabalho\\christian\\programacao\\faculdade\\pi-3sem-pocs\\pocs_project\\screens\\logingame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{36C35068-16D0-4BDD-8D4E-1D4CBBB5C2E9}|POCS_Project.csproj|solutionrelative:screens\\logingame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameScreen.cs",
+              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\GameScreen.cs",
+              "RelativeDocumentMoniker": "screens\\GameScreen.cs",
+              "ToolTip": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\GameScreen.cs",
+              "RelativeToolTip": "screens\\GameScreen.cs",
+              "ViewState": "AQIAAKIAAAAAAAAAAAAowKsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T13:22:38.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameScreen.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\GameScreen.cs",
+              "RelativeDocumentMoniker": "screens\\GameScreen.cs",
+              "ToolTip": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\GameScreen.cs [Design]",
+              "RelativeToolTip": "screens\\GameScreen.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T13:22:32.786Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LoginGame.cs",
+              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\LoginGame.cs",
+              "RelativeDocumentMoniker": "screens\\LoginGame.cs",
+              "ToolTip": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\LoginGame.cs",
+              "RelativeToolTip": "screens\\LoginGame.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwGoAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T13:14:42.926Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginGame.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\LoginGame.cs",
+              "RelativeDocumentMoniker": "screens\\LoginGame.cs",
+              "ToolTip": "C:\\Users\\chris\\OneDrive\\\u00C1rea de Trabalho\\Christian\\programacao\\faculdade\\PI-3SEM-POCS\\POCS_Project\\screens\\LoginGame.cs [Design]",
+              "RelativeToolTip": "screens\\LoginGame.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T13:13:58.685Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

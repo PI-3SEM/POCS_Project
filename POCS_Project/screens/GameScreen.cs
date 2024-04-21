@@ -20,20 +20,26 @@ namespace POCS_Project.screens
 {
     public partial class GameScreen : Form
     {
+        private int IdInitPlayer;
+        private bool IsAutonomousMode = false;
+        private bool IsYourTime = false;
         private readonly Game _gameData;
         private readonly GameController _gameController;
         private readonly Player LoggedUser;
-        private int IdInitPlayer;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
 
-        public GameScreen(Player loggedPlayer ,Game game)
+        public GameScreen(Player loggedPlayer ,Game game, bool isAutonomousMode)
         {
             InitializeComponent();
             LoggedUser = loggedPlayer;
+            IsAutonomousMode = isAutonomousMode;
             _gameController = new GameController();
+
+            int indexLoggedUser = game.Players.FindIndex(x => x.Id == loggedPlayer.Id);
+            game.Players[indexLoggedUser] = loggedPlayer;
             _gameData = game;
             
             List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
@@ -107,9 +113,9 @@ namespace POCS_Project.screens
             }
         }
 
-        private bool VerifyTime()
+        private void VerifyTime()
         {
-            bool response = true;
+            bool response = false;
             string strVerifyTime = Jogo.VerificarVez(_gameData.Id);
             string[] dataVerifyTime = Regex.Split(strVerifyTime, "\r\n");
             Array.Resize(ref dataVerifyTime, dataVerifyTime.Length - 1);
@@ -147,7 +153,7 @@ namespace POCS_Project.screens
                 PlayedCards = playedCards;
             }
 
-            return response;
+            IsYourTime = response;
         }
 
         private void RenderSendedCards(object sender, EventArgs e)
@@ -160,6 +166,39 @@ namespace POCS_Project.screens
                 ModifyCardImageInsertValue(ref cardImage, cardData);
                 pbPlayedCard.Image = cardImage; 
             }
+            if (IsAutonomousMode && IsYourTime)
+                AutonomousSystemPlay(sender, e);
+        }
+
+        private void AutonomousSystemPlay(object sender, EventArgs e)
+        {
+            Card firstCardPlayed = null;
+            List<Card> myCards = PlayersInGame[LoggedUser];
+            Card cardToPlay;
+            int cardToPlayIndex = 0;
+
+            if (PlayedCards.Count > 0)
+                firstCardPlayed = PlayedCards.First();
+
+            if (firstCardPlayed == null)
+                cardToPlayIndex = myCards.FindIndex(x => x.Suit != Suits.Heart);
+            else if (myCards.Any(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed))
+                cardToPlayIndex = myCards.FindIndex(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed);
+            else
+                cardToPlayIndex = myCards.FindIndex(x => x.Suit == Suits.Heart && !x.WasUsed);
+
+            cardToPlay = myCards[cardToPlayIndex];
+            try
+            {
+                SendCard(cardToPlay);
+                btnProvBet0_Click(sender, e);
+                PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
+                IsYourTime = false;
+            }
+            catch
+            {
+                lblPlayerTimeIndicator.Text = "Ainda não é minha vez!";
+            }
         }
 
         private void SendCard(object sender, EventArgs e)
@@ -170,17 +209,37 @@ namespace POCS_Project.screens
             int ownerId = Convert.ToInt32(cardData[1]);
             try
             {
-                if (VerifyTime()) {
+                if (IsYourTime) {
                     Player keyLogged = PlayersInGame.Keys.FirstOrDefault(x => x.Id == LoggedUser.Id);
                     string playResult = Jogo.Jogar(ownerId, LoggedUser.Password, cardId);
                     int cardValue = Convert.ToInt32(playResult);
                     int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
                     PlayersInGame[keyLogged][indexCard].Value = cardValue;
+                    PlayersInGame[LoggedUser][indexCard].WasUsed = true;
                 }
             }
             catch
             {
                 lblPlayerTimeIndicator.Text = $"Não é a sua vez!!";
+            }
+        }
+
+        private void SendCard(Card cardToPlay)
+        {
+            try
+            {
+                if (IsYourTime)
+                {
+                    string playResult = Jogo.Jogar(cardToPlay.Owner.Id, LoggedUser.Password, cardToPlay.Order);
+                    int cardValue = Convert.ToInt32(playResult);
+                    int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
+                    PlayersInGame[LoggedUser][indexCard].Value = cardValue;
+                    PlayersInGame[LoggedUser][indexCard].WasUsed = true;
+                }
+            }
+            catch
+            {
+                throw new Exception("Não é a sua vez!!");
             }
         }
 
@@ -230,7 +289,7 @@ namespace POCS_Project.screens
         {
             var MyTimer = new Timer
             {
-                Interval = 2500,
+                Interval = 5000,
                 Enabled = true
             };
             MyTimer.Tick += new EventHandler(RenderSendedCards);

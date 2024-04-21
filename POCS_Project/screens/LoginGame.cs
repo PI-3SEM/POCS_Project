@@ -21,6 +21,8 @@ namespace POCS_Project.screens
 
         private readonly PlayersController _playersController;
 
+        private bool IsAutonomousMode = false;
+
         private Player LoggedPlayer { get; set; }
 
         public LoginGame(Game gameData)
@@ -102,15 +104,21 @@ namespace POCS_Project.screens
             {
                 _gameData.Players = _playersController.GetAllPlayers(_gameData.Id);
                 var idInitPlayer = _gameController.InitGame(LoggedPlayer.Id, LoggedPlayer.Password);
-                var gameScreen = new GameScreen(LoggedPlayer, _gameData);
+                var gameScreen = new GameScreen(LoggedPlayer, _gameData, IsAutonomousMode);
                 this.ChangeScreen(gameScreen);
             }
             catch(Exception error)
             {
                 if (error.Message.Contains("Partida não está aberta"))
-                    this.ChangeScreen(new GameScreen(LoggedPlayer, _gameData));
+                    this.ChangeScreen(new GameScreen(LoggedPlayer, _gameData, IsAutonomousMode));
                 ErrorsMessageLabel.Text = error.Message;
             }
+        }
+
+        private void checkBtnAutonomousMode_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            IsAutonomousMode = checkBox.Checked;
         }
     }
 }

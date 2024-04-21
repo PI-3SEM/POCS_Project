@@ -14,6 +14,7 @@ namespace POCS_Project.entities
         public int Order { get; set; }
         public Suits Suit { get; set; }
         public int Value { get; set; }
+        public bool WasUsed = false;
     }
 
     public class CardStyle
