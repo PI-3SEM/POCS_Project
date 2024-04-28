@@ -147,7 +147,6 @@ C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Deb
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\Enums.NET.xml
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\ICSharpCode.SharpZipLib.pdb
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\ICSharpCode.SharpZipLib.xml
-C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\MagicTrickServer.xml
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\MathNet.Numerics.xml
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
 C:\Users\pepem\OneDrive\Documentos\Projetos\C#\POCS_Project\POCS_Project\bin\Debug\NPOI.Core.pdb

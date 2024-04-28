@@ -32,6 +32,7 @@
             this.pnlGame = new System.Windows.Forms.Panel();
             this.pbPlayedCard = new System.Windows.Forms.PictureBox();
             this.btnProvBet0 = new System.Windows.Forms.Button();
+            this.lblVersionOnGame = new System.Windows.Forms.Label();
             this.pnlGame.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPlayedCard)).BeginInit();
             this.SuspendLayout();
@@ -84,11 +85,22 @@
             this.btnProvBet0.UseVisualStyleBackColor = true;
             this.btnProvBet0.Click += new System.EventHandler(this.btnProvBet0_Click);
             // 
+            // lblVersionOnGame
+            // 
+            this.lblVersionOnGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVersionOnGame.AutoSize = true;
+            this.lblVersionOnGame.Location = new System.Drawing.Point(840, 1);
+            this.lblVersionOnGame.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblVersionOnGame.Name = "lblVersionOnGame";
+            this.lblVersionOnGame.Size = new System.Drawing.Size(0, 13);
+            this.lblVersionOnGame.TabIndex = 2;
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 681);
+            this.Controls.Add(this.lblVersionOnGame);
             this.Controls.Add(this.pnlGame);
             this.Controls.Add(this.lblPlayerTimeIndicator);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Panel pnlGame;
         private System.Windows.Forms.Button btnProvBet0;
         private System.Windows.Forms.PictureBox pbPlayedCard;
+        private System.Windows.Forms.Label lblVersionOnGame;
     }
 }

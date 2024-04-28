@@ -30,6 +30,7 @@ namespace POCS_Project.screens
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
+        private readonly Logic logics = new Logic();
 
         public GameScreen(Player loggedPlayer ,Game game, bool isAutonomousMode)
         {
@@ -37,6 +38,7 @@ namespace POCS_Project.screens
             LoggedUser = loggedPlayer;
             IsAutonomousMode = isAutonomousMode;
             _gameController = new GameController();
+            lblVersionOnGame.Text = Jogo.Versao; 
 
             int indexLoggedUser = game.Players.FindIndex(x => x.Id == loggedPlayer.Id);
             game.Players[indexLoggedUser] = loggedPlayer;
@@ -67,7 +69,7 @@ namespace POCS_Project.screens
                 grid.RowCount = 6;
                 grid.ColumnCount = 2;
             }
-            
+
             foreach (Card card in cards)
             {
 
@@ -75,10 +77,18 @@ namespace POCS_Project.screens
                 {
                     BackgroundImageLayout = ImageLayout.Center;
                 };
-                pbCard.MaximumSize = new Size(CardStyle.x, CardStyle.y+5);
+                pbCard.MaximumSize = new Size(CardStyle.x, CardStyle.y + 5);
 
-                string item = CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName()));
-                pbCard.BackgroundImage = Image.FromFile(item);
+
+                if (card.WasUsed)
+                {
+                    pbCard.BackgroundImage = base.BackgroundImage;
+                }
+                else
+                {
+                    string item = CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName()));
+                    pbCard.BackgroundImage = Image.FromFile(item);
+                }
 
 
                 if(player.Id == LoggedUser.Id)
@@ -177,6 +187,10 @@ namespace POCS_Project.screens
             Card cardToPlay;
             int cardToPlayIndex = 0;
 
+            List<Card> cardsThatSuit = null;
+
+            Dictionary<string, int[]> lol = logics.FirstStep(myCards);
+
             if (PlayedCards.Count > 0)
                 firstCardPlayed = PlayedCards.First();
 
@@ -184,6 +198,7 @@ namespace POCS_Project.screens
                 cardToPlayIndex = myCards.FindIndex(x => x.Suit != Suits.Heart);
             else if (myCards.Any(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed))
                 cardToPlayIndex = myCards.FindIndex(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed);
+                
             else
                 cardToPlayIndex = myCards.FindIndex(x => x.Suit == Suits.Heart && !x.WasUsed);
 
@@ -216,6 +231,7 @@ namespace POCS_Project.screens
                     int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
                     PlayersInGame[keyLogged][indexCard].Value = cardValue;
                     PlayersInGame[LoggedUser][indexCard].WasUsed = true;
+                    RenderPlayersGridCards();
                 }
             }
             catch
@@ -235,6 +251,7 @@ namespace POCS_Project.screens
                     int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                     PlayersInGame[LoggedUser][indexCard].Value = cardValue;
                     PlayersInGame[LoggedUser][indexCard].WasUsed = true;
+                    RenderPlayersGridCards();
                 }
             }
             catch

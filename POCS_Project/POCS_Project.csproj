@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="MagicTrickServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\MagicTrickServer.dll</HintPath>
+      <HintPath>..\..\..\..\..\Área de Trabalho\tester\MagicTrickServer.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="controllers\GameController.cs" />
+    <Compile Include="controllers\Logic.cs" />
     <Compile Include="controllers\PlayersController.cs" />
     <Compile Include="entities\Card.cs" />
     <Compile Include="entities\Game.cs" />
