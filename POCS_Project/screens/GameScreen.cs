@@ -193,6 +193,7 @@ namespace POCS_Project.screens
 
             if (PlayedCards.Count > 0)
                 firstCardPlayed = PlayedCards.First();
+                
 
             if (firstCardPlayed == null)
                 cardToPlayIndex = myCards.FindIndex(x => x.Suit != Suits.Heart);
