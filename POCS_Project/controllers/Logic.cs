@@ -31,6 +31,7 @@ namespace POCS_Project.controllers
 
                 if (index.Count() > 0 && flag != true)
                     dataCards.Add(cards[index[0]].Suit.ToString(), index.ToArray());
+                
 
             }
 
@@ -38,7 +39,7 @@ namespace POCS_Project.controllers
 
         }
 
-        internal int[] readStepValues(Dictionary<string, int[]> dataCards,List<Card> lista, string naipe)
+        internal int[] ReadStepValues(Dictionary<string, int[]> dataCards,List<Card> lista, string naipe)
         {
             List<int> result = new List<int>();
             List<int> outers = new List<int>();
@@ -91,8 +92,8 @@ namespace POCS_Project.controllers
         public string MaxOfSep(Dictionary<string, int[]> sepCards)
         {
             Dictionary<string, int> order = new Dictionary<string, int>();
-            string max = "";
-            
+            string max = null;
+
             foreach (var key in sepCards.Keys)
             {
                 max = key;
@@ -102,7 +103,7 @@ namespace POCS_Project.controllers
 
             foreach (var key in sepCards.Keys)
             {
-                if (order[key] < order[max])
+                if (order[key] > order[max])
                 {
                     max = key;
                 }
@@ -112,7 +113,9 @@ namespace POCS_Project.controllers
 
         }
 
-        public int afterThem(List<Card> playeds, List<Card> myCards)
+        
+
+        public int AfterThem(List<Card> playeds, List<Card> myCards)
         {
             Dictionary<string, int[]> sepCardsPlayed = FirstStep(playeds);
             Dictionary<string, int[]> sepMyCards = FirstStep(myCards);
@@ -120,25 +123,21 @@ namespace POCS_Project.controllers
             //primeira naipe carta playeds.First().Suit
 
             //verifica se mais de um naipe e busca saber qual é
-            if (sepCardsPlayed.Keys.Count() > 1)
+            if (sepCardsPlayed.Keys.Count() > 0)
             {
-                foreach (var naipe in sepMyCards.Keys)
+                if (!sepMyCards.Keys.Contains(sepCardsPlayed.Keys.First()))
                 {
-                    if(naipe == "Heart")
-                    {
-                        int value = readStepValues(sepCardsPlayed, playeds, "Heart")[0]; 
-                        //...
-                    }
+                    return ReadStepValues(sepMyCards, myCards, "Heart").First();
                 }
             }
             else
             {
-                if (sepMyCards.Any(some => some.Key == playeds.First().Suit.ToString()))
+                if (sepMyCards.Any(some => some.Key == sepCardsPlayed.Keys.ToList().First()))
                 {
-                    int[] equalCards = readStepValues(sepMyCards, myCards, playeds.First().Suit.ToString()); // Retorna os index's de suas cartas com esse naipe
-                    int[] playedValues = readStepValues(sepCardsPlayed, playeds, playeds.First().Suit.ToString());
+                    int[] equalCards = ReadStepValues(sepMyCards, myCards, sepCardsPlayed.Keys.ToList()[0]); // Retorna os index's de suas cartas com esse naipe
+                    int[] playedValues = ReadStepValues(sepCardsPlayed, playeds, sepCardsPlayed.Keys.ToList()[0]);
 
-                    if (playedValues.Max(x => x > equalCards.Last() && playeds[x].Suit != Suits.Heart))
+                    if (playedValues.Max(x => x > equalCards.Last() && sepCardsPlayed.Keys.ToList()[0] != "Heart"))
                     {
                         return equalCards.First();
                     }
@@ -147,18 +146,27 @@ namespace POCS_Project.controllers
                         return equalCards.Last();
                     }
                 }
-                else
-                {
-                    // joga o menor daquele que tiver mais cartas
-                    
-                    
-                }
+
+
+               
             }
 
 
+            string key = MaxOfSep(sepMyCards);
+            return sepMyCards[key].First();
 
-            return 0;
         }
+
+
+        public int FistPlay(List<Card> myCards)
+        {
+            Dictionary<string, int[]> sepMyCards = FirstStep(myCards);
+
+            var key = MaxOfSep(sepMyCards);
+
+            return sepMyCards[key].Last();
+        }
+
 
     }
 }

@@ -192,14 +192,13 @@ namespace POCS_Project.screens
             Dictionary<string, int[]> lol = logics.FirstStep(myCards);
 
             if (PlayedCards.Count > 0)
-                firstCardPlayed = PlayedCards.First();
-                
+                //firstCardPlayed = PlayedCards.First();
+                cardToPlayIndex = logics.AfterThem(PlayedCards, myCards);
+
 
             if (firstCardPlayed == null)
-                cardToPlayIndex = myCards.FindIndex(x => x.Suit != Suits.Heart);
-            else if (myCards.Any(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed))
-                cardToPlayIndex = myCards.FindIndex(x => x.Suit == firstCardPlayed.Suit && !x.WasUsed);
-                
+                cardToPlayIndex = logics.FistPlay(myCards);
+       
             else
                 cardToPlayIndex = myCards.FindIndex(x => x.Suit == Suits.Heart && !x.WasUsed);
 
