@@ -1,4 +1,5 @@
 ﻿using NPOI.SS.Formula.Functions;
+using NPOI.XSSF.Streaming.Values;
 using NPOI.XSSF.UserModel;
 using POCS_Project.entities;
 using System;
@@ -40,6 +41,8 @@ namespace POCS_Project.controllers
         internal int[] readStepValues(Dictionary<string, int[]> dataCards,List<Card> lista, string naipe)
         {
             List<int> result = new List<int>();
+            List<int> outers = new List<int>();
+            List<int> lastOption = new List<int>();
             
             foreach (var item in dataCards.Keys)
             {
@@ -52,8 +55,61 @@ namespace POCS_Project.controllers
                     }
 
                 }
+                else if (item == "Heart")
+                {
+                    var x = dataCards[item];
+                    foreach (var value in x)
+                    {
+                        lastOption.Add(lista[value].Value);
+                    }
+                }
+                else
+                {
+                    var x = dataCards[item];
+                    foreach (var value in x)
+                    {
+                        outers.Add(lista[value].Value);
+                    }
+                }
             }
+
+            if(result.Count() < 1)
+            {
+                if (lastOption.Count() > 0)
+                {
+                    return lastOption.ToArray();
+                }
+                else
+                {
+                    return outers.ToArray();
+                }
+            }
+
             return result.ToArray();
+        }
+
+        public string MaxOfSep(Dictionary<string, int[]> sepCards)
+        {
+            Dictionary<string, int> order = new Dictionary<string, int>();
+            string max = "";
+            
+            foreach (var key in sepCards.Keys)
+            {
+                max = key;
+                var x = sepCards[key];
+                order.Add(key, x.Count());
+            }
+
+            foreach (var key in sepCards.Keys)
+            {
+                if (order[key] < order[max])
+                {
+                    max = key;
+                }
+            }
+
+            return max;
+
         }
 
         public int afterThem(List<Card> playeds, List<Card> myCards)
@@ -82,15 +138,20 @@ namespace POCS_Project.controllers
                     int[] equalCards = readStepValues(sepMyCards, myCards, playeds.First().Suit.ToString()); // Retorna os index's de suas cartas com esse naipe
                     int[] playedValues = readStepValues(sepCardsPlayed, playeds, playeds.First().Suit.ToString());
 
-                    if (playedValues.Max(x => x > equalCards.Last()))
+                    if (playedValues.Max(x => x > equalCards.Last() && playeds[x].Suit != Suits.Heart))
                     {
-
+                        return equalCards.First();
                     }
-                    
+                    else
+                    {
+                        return equalCards.Last();
+                    }
                 }
                 else
                 {
-
+                    // joga o menor daquele que tiver mais cartas
+                    
+                    
                 }
             }
 
