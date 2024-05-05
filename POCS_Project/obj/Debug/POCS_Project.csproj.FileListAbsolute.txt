@@ -1,7 +1,6 @@
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\bin\Debug\POCS_Project.exe.config
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\bin\Debug\POCS_Project.exe
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\bin\Debug\POCS_Project.pdb
-C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\bin\Debug\MagicTrickServer.dll
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\bin\Debug\MagicTrickServer.xml
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\obj\Debug\POCS_Project.csproj.AssemblyReference.cache
 C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\POCS_Project\POCS_Project\obj\Debug\POCS_Project.Properties.Resources.resources

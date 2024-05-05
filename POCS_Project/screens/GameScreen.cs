@@ -25,12 +25,12 @@ namespace POCS_Project.screens
         private bool IsYourTime = false;
         private readonly Game _gameData;
         private readonly GameController _gameController;
+        private readonly LogicController _logicController = new LogicController();
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
-        private readonly Logic logics = new Logic();
 
         public GameScreen(Player loggedPlayer ,Game game, bool isAutonomousMode)
         {
@@ -182,25 +182,16 @@ namespace POCS_Project.screens
 
         private void AutonomousSystemPlay(object sender, EventArgs e)
         {
-            Card firstCardPlayed = null;
-            List<Card> myCards = PlayersInGame[LoggedUser];
+            List<Card> myCards = PlayersInGame[LoggedUser].Where(x=>!x.WasUsed).ToList();
             Card cardToPlay;
             int cardToPlayIndex = 0;
 
-            List<Card> cardsThatSuit = null;
-
-            Dictionary<string, int[]> lol = logics.FirstStep(myCards);
+            Dictionary<string, int[]> lol = _logicController.FirstStep(myCards);
 
             if (PlayedCards.Count > 0)
-                //firstCardPlayed = PlayedCards.First();
-                cardToPlayIndex = logics.AfterThem(PlayedCards, myCards);
-
-
-            if (firstCardPlayed == null)
-                cardToPlayIndex = logics.FistPlay(myCards);
-       
+                cardToPlayIndex = myCards.FindIndex(x=>x.Order == _logicController.AfterThem(PlayedCards, myCards));
             else
-                cardToPlayIndex = myCards.FindIndex(x => x.Suit == Suits.Heart && !x.WasUsed);
+                cardToPlayIndex = _logicController.FirstPlay(myCards);
 
             cardToPlay = myCards[cardToPlayIndex];
             try
@@ -210,9 +201,9 @@ namespace POCS_Project.screens
                 PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
                 IsYourTime = false;
             }
-            catch
+            catch(Exception error)
             {
-                lblPlayerTimeIndicator.Text = "Ainda não é minha vez!";
+                lblPlayerTimeIndicator.Text = error.Message;
             }
         }
 
@@ -234,9 +225,9 @@ namespace POCS_Project.screens
                     RenderPlayersGridCards();
                 }
             }
-            catch
+            catch(Exception error)
             {
-                lblPlayerTimeIndicator.Text = $"Não é a sua vez!!";
+                lblPlayerTimeIndicator.Text = error.Message;
             }
         }
 

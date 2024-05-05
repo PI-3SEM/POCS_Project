@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="controllers\GameController.cs" />
-    <Compile Include="controllers\Logic.cs" />
+    <Compile Include="controllers\LogicController.cs" />
     <Compile Include="controllers\PlayersController.cs" />
     <Compile Include="entities\Card.cs" />
     <Compile Include="entities\Game.cs" />
