@@ -29,6 +29,7 @@ namespace POCS_Project.screens
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
+        private Dictionary<Player, int> PlayersScore = new Dictionary<Player, int>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
 
@@ -197,8 +198,13 @@ namespace POCS_Project.screens
                 ModifyCardImageInsertValue(ref cardImage, cardData);
                 pbPlayedCard.Image = cardImage; 
             }
-            if (IsAutonomousMode && IsYourTime)
-                AutonomousSystemPlay(sender, e);
+            if (IsAutonomousMode)
+            {
+                if(IsYourTime)
+                    AutonomousSystemPlay(sender, e);
+                if (!PlayersInGame.Any(x => x.Value.Any(y => !y.WasUsed)))
+                    EndPlay();
+            }
         }
 
         private void AutonomousSystemPlay(object sender, EventArgs e)
@@ -212,7 +218,7 @@ namespace POCS_Project.screens
             if (PlayedCards.Count > 0)
                 cardToPlayIndex = myCards.FindIndex(x=>x.Order == _logicController.AfterThem(PlayedCards, myCards));
             else
-                cardToPlayIndex = _logicController.FirstPlay(myCards);
+                cardToPlayIndex = myCards.FindIndex(x => x.Order == _logicController.FirstPlay(myCards));
 
             cardToPlay = myCards[cardToPlayIndex];
             try
@@ -224,12 +230,17 @@ namespace POCS_Project.screens
             catch(Exception error)
             {
                 lblPlayerTimeIndicator.Text = error.Message;
-                if(myCards.Count == 1)
+                if (myCards.Count == 1)
                 {
                     PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order));
                     lblPlayerTimeIndicator.Text = $"Foi realizado a aposta, a aposta foi vencer {PlayersInGame[LoggedUser][cardToPlayIndex].Value} partidas!";
                 }
             }
+        }
+
+        private void EndPlay()
+        {
+            
         }
 
         private void SendCard(object sender, EventArgs e)
