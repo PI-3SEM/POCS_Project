@@ -198,12 +198,16 @@ namespace POCS_Project.screens
             {
                 SendCard(cardToPlay);
                 btnProvBet0_Click(sender, e);
-                PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
                 IsYourTime = false;
             }
             catch(Exception error)
             {
                 lblPlayerTimeIndicator.Text = error.Message;
+                if(myCards.Count == 1)
+                {
+                    PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order));
+                    lblPlayerTimeIndicator.Text = $"Foi realizado a aposta, a aposta foi vencer {PlayersInGame[LoggedUser][cardToPlayIndex].Value} partidas!";
+                }
             }
         }
 
@@ -233,21 +237,14 @@ namespace POCS_Project.screens
 
         private void SendCard(Card cardToPlay)
         {
-            try
+            if (IsYourTime)
             {
-                if (IsYourTime)
-                {
-                    string playResult = Jogo.Jogar(cardToPlay.Owner.Id, LoggedUser.Password, cardToPlay.Order);
-                    int cardValue = Convert.ToInt32(playResult);
-                    int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
-                    PlayersInGame[LoggedUser][indexCard].Value = cardValue;
-                    PlayersInGame[LoggedUser][indexCard].WasUsed = true;
-                    RenderPlayersGridCards();
-                }
-            }
-            catch
-            {
-                throw new Exception("Não é a sua vez!!");
+                string playResult = Jogo.Jogar(cardToPlay.Owner.Id, LoggedUser.Password, cardToPlay.Order);
+                int cardValue = Convert.ToInt32(playResult);
+                int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
+                PlayersInGame[LoggedUser][indexCard].Value = cardValue;
+                PlayersInGame[LoggedUser][indexCard].WasUsed = true;
+                RenderPlayersGridCards();
             }
         }
 
