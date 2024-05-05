@@ -24,7 +24,7 @@ namespace POCS_Project.screens
         private bool IsAutonomousMode = false;
         private bool IsYourTime = false;
         private readonly Game _gameData;
-        private readonly GameController _gameController;
+        private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
@@ -37,22 +37,28 @@ namespace POCS_Project.screens
             InitializeComponent();
             LoggedUser = loggedPlayer;
             IsAutonomousMode = isAutonomousMode;
-            _gameController = new GameController();
             lblVersionOnGame.Text = Jogo.Versao; 
-
             int indexLoggedUser = game.Players.FindIndex(x => x.Id == loggedPlayer.Id);
             game.Players[indexLoggedUser] = loggedPlayer;
             _gameData = game;
-            
-            List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
-            foreach(Player player in _gameData.Players) {
-                PlayersInGame.Add(player, cards.Where(x => x.Owner == player).ToList());
-                PlayersGridCards.Add(player, new TableLayoutPanel { CellBorderStyle = TableLayoutPanelCellBorderStyle.Single });
-            }
+
+            DistributeCards();
             VerifyTime();
             RenderPlayersGridCards();
         }
-
+        
+        private void DistributeCards()
+        {
+            PlayersInGame.Clear();
+            PlayersGridCards.Clear();
+            List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
+            foreach (Player player in _gameData.Players)
+            {
+                PlayersInGame.Add(player, cards.Where(x => x.Owner == player).ToList());
+                PlayersGridCards.Add(player, new TableLayoutPanel { CellBorderStyle = TableLayoutPanelCellBorderStyle.Single });
+            }
+        }
+        
         private void RenderCard(Player player,TableLayoutPanel grid)
         {
             List<Card> cards = PlayersInGame.FirstOrDefault(x => x.Key.Equals(player)).Value;
@@ -148,6 +154,7 @@ namespace POCS_Project.screens
             /* Separação das cartas jogadas */
             if (dataVerifyTime.Count() > 1)
             {
+                VerifyRounds();
                 dataVerifyTime = dataVerifyTime.Skip(1).ToArray();
                 List<Card> playedCards = new List<Card>();
                 foreach(string cardData in dataVerifyTime)
@@ -164,6 +171,20 @@ namespace POCS_Project.screens
             }
 
             IsYourTime = response;
+        }
+
+        private void VerifyRounds()
+        {
+            var winners = _gameController.GetWinners(_gameData.Id, PlayersInGame.Keys.ToList());
+            string winnersLayoutStr = "%[PLAYERNAME]% - %[ROUNDSWON]%";
+            string textWinners= "";
+            foreach(var winner in winners)
+            {
+                textWinners+= winnersLayoutStr
+                        .Replace("%[PLAYERNAME]%",winner.Key.Name)
+                        .Replace("%[ROUNDSWON]%", winner.Value.ToString()) + "\n";
+            }
+            tbxDisplayRounds.Text = textWinners;
         }
 
         private void RenderSendedCards(object sender, EventArgs e)

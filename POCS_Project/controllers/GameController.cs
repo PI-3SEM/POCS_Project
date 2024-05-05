@@ -94,5 +94,47 @@ namespace POCS_Project.controllers
             }
             return response;
         }
+    
+        public Dictionary<Player, int> GetWinners(int idPartida, List<Player> playersInGame)
+        {
+            Dictionary<Player, int> response = new Dictionary<Player, int>();
+            Dictionary<int, List<Round>> roundsGrouped = new Dictionary<int, List<Round>>();
+            string plays = Jogo.ExibirJogadas(idPartida);
+            string[] playsArr = Regex.Split(plays, "\r\n").Where(x=>x.Count() > 0).ToArray();
+            
+            /* separa os rounds jogados em id's */
+            foreach(string dataPlay in playsArr)
+            {
+                string[] data = Regex.Split(dataPlay, ",");
+                int idRound = Convert.ToInt32(data[0]);
+                int idPLayer = Convert.ToInt32(data[1]);
+                Suits suitCard = (Suits)data[2][0];
+                int valueCard = Convert.ToInt32(data[3]);
+                if(!roundsGrouped.ContainsKey(idRound))
+                   roundsGrouped.Add(idRound,new List<Round>());
+                roundsGrouped[idRound].Add(new Round {
+                    Id = idRound,
+                    IdPLayer = idPLayer,
+                    CardPlayed = new Card
+                    {
+                        Suit = suitCard,
+                        Value = valueCard,
+                    }
+                });
+            }
+            /* conta quantidade de rodadas ganhas por cada jogador */
+            foreach (KeyValuePair<int, List<Round>> rounds in roundsGrouped)
+            {
+                // pegando o jogador que jogou a maior carta
+                Player winner = playersInGame.FirstOrDefault(x => x.Id == rounds.Value.FirstOrDefault(y => y.CardPlayed.Value == rounds.Value.Max(z => z.CardPlayed.Value)).IdPLayer);
+                if(response.Count == 0 || !response.Keys.Contains(winner))
+                    response.Add(winner, 1);
+                else
+                    response[winner]++;
+            }
+            
+            return response;
+        }
+    
     }
 }
