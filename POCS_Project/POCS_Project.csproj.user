@@ -2,5 +2,13 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ProjectFiles</ProjectView>
+    <PublishUrlHistory>/publish/|C:\Users\chris\Desktop\Programacao\Estudo_C#\|C:\Users\chris\Desktop\Programacao\Estudo_C#\PI_3Sem\</PublishUrlHistory>
+    <InstallUrlHistory />
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>pt-BR</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
 </Project>

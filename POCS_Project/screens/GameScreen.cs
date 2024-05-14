@@ -23,6 +23,7 @@ namespace POCS_Project.screens
         private int IdInitPlayer;
         private bool IsAutonomousMode = false;
         private bool IsYourTime = false;
+        private int QuantityPlays = 1;
         private readonly Game _gameData;
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
@@ -42,7 +43,6 @@ namespace POCS_Project.screens
             int indexLoggedUser = game.Players.FindIndex(x => x.Id == loggedPlayer.Id);
             game.Players[indexLoggedUser] = loggedPlayer;
             _gameData = game;
-
             DistributeCards();
             VerifyTime();
             RenderPlayersGridCards();
@@ -62,6 +62,9 @@ namespace POCS_Project.screens
         
         private void RenderCard(Player player,TableLayoutPanel grid)
         {
+            grid.Controls.Clear();
+            grid.RowCount = 0;
+
             List<Card> cards = PlayersInGame.FirstOrDefault(x => x.Key.Equals(player)).Value;
             int indexColumn = 0;
             int indexRow = 0;
@@ -200,15 +203,19 @@ namespace POCS_Project.screens
             }
             if (IsAutonomousMode)
             {
-                if(IsYourTime)
-                    AutonomousSystemPlay(sender, e);
                 if (!PlayersInGame.Any(x => x.Value.Any(y => !y.WasUsed)))
-                    EndPlay();
+                    VerifyEndPlay();
+
+                if (IsYourTime)
+                    AutonomousSystemPlay(sender, e);   
             }
         }
 
         private void AutonomousSystemPlay(object sender, EventArgs e)
         {
+            if (PlayersInGame[LoggedUser].Where(x => !x.WasUsed).ToList().Count == 0)
+                VerifyEndPlay();
+
             List<Card> myCards = PlayersInGame[LoggedUser].Where(x=>!x.WasUsed).ToList();
             Card cardToPlay;
             int cardToPlayIndex = 0;
@@ -223,24 +230,38 @@ namespace POCS_Project.screens
             cardToPlay = myCards[cardToPlayIndex];
             try
             {
-                SendCard(cardToPlay);
-                btnProvBet0_Click(sender, e);
+                if (myCards.Count == 1)
+                {
+                    string valueCard = Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order);
+                    cardToPlayIndex = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
+                    PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(valueCard);
+                    PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
+                    lblPlayerTimeIndicator.Text = $"Foi realizado a aposta, a aposta foi vencer {PlayersInGame[LoggedUser][cardToPlayIndex].Value} partidas!";
+                }
+                else
+                {
+                    SendCard(cardToPlay);
+                    btnProvBet0_Click(sender, e);
+                }
                 IsYourTime = false;
             }
             catch(Exception error)
             {
                 lblPlayerTimeIndicator.Text = error.Message;
-                if (myCards.Count == 1)
-                {
-                    PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order));
-                    lblPlayerTimeIndicator.Text = $"Foi realizado a aposta, a aposta foi vencer {PlayersInGame[LoggedUser][cardToPlayIndex].Value} partidas!";
-                }
             }
         }
 
-        private void EndPlay()
+        private void VerifyEndPlay()
         {
-            
+            if(QuantityPlays < PlayersInGame.Count)
+            {
+                QuantityPlays++;
+                DistributeCards();
+                VerifyTime();
+                RenderPlayersGridCards();
+            }
+            else
+              this.ChangeScreen(new SelectAnExistentGame());
         }
 
         private void SendCard(object sender, EventArgs e)
