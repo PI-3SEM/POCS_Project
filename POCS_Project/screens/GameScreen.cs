@@ -23,14 +23,16 @@ namespace POCS_Project.screens
         private int IdInitPlayer;
         private bool IsAutonomousMode = false;
         private bool IsYourTime = false;
-        private int QuantityPlays = 1;
+        private int QuantityMatches = 1;
         private readonly Game _gameData;
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
-        private Dictionary<Player, int> PlayersScore = new Dictionary<Player, int>();
+        private Dictionary<Player, int> PlayersScoreRounds = new Dictionary<Player, int>();
+        private Dictionary<Player, int> PlayersScoreGame = new Dictionary<Player, int>();
+        private Dictionary<Player, int> PlayersBet = new Dictionary<Player, int>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
 
@@ -50,13 +52,16 @@ namespace POCS_Project.screens
         
         private void DistributeCards()
         {
-            PlayersInGame.Clear();
-            PlayersGridCards.Clear();
             List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
             foreach (Player player in _gameData.Players)
             {
                 PlayersInGame.Add(player, cards.Where(x => x.Owner == player).ToList());
                 PlayersGridCards.Add(player, new TableLayoutPanel { CellBorderStyle = TableLayoutPanelCellBorderStyle.Single });
+                if (PlayersBet.Count < PlayersInGame.Count)
+                {
+                    PlayersBet.Add(player, 0);
+                    PlayersScoreGame.Add(player, 0);
+                }
             }
         }
         
@@ -64,6 +69,7 @@ namespace POCS_Project.screens
         {
             grid.Controls.Clear();
             grid.RowCount = 0;
+            grid.ColumnCount = 0;
 
             List<Card> cards = PlayersInGame.FirstOrDefault(x => x.Key.Equals(player)).Value;
             int indexColumn = 0;
@@ -155,6 +161,18 @@ namespace POCS_Project.screens
                 
             }
 
+            /* Verificação de apostas */
+            foreach(var data in dataVerifyTime)
+            {
+                if (data.StartsWith("A:"))
+                {
+                    var arrData = Regex.Split(data, ",");
+                    int idPlayer = Convert.ToInt32(Regex.Split(arrData[0], ":")[1]);
+                    Player whoBet = PlayersInGame.FirstOrDefault(x=>x.Key.Id == idPlayer).Key;
+                    PlayersBet[whoBet] = Convert.ToInt32(arrData[2]);
+                }
+            }
+
             /* Separação das cartas jogadas */
             if (dataVerifyTime.Count() > 1)
             {
@@ -179,43 +197,57 @@ namespace POCS_Project.screens
 
         private void VerifyRounds()
         {
-            var winners = _gameController.GetWinners(_gameData.Id, PlayersInGame.Keys.ToList());
-            string winnersLayoutStr = "%[PLAYERNAME]% - %[ROUNDSWON]%";
-            string textWinners= "";
-            foreach(var winner in winners)
+            PlayersScoreRounds = _gameController.GetWinners(_gameData.Id, PlayersInGame.Keys.ToList());
+            string scoreStr = "",
+                   roundsStr = "",
+                   scorePlayerLayoutStr = "    %[PLAYERNAME]% - %[SCOREPLAYER]%",
+                   winnersRoundsLayoutStr = "    %[PLAYERNAME]% - %[ROUNDSWON]%",
+                   textDisplay= "Score:\n%[SCORE]%\nRounds:\n%[ROUNDS]%"
+            ;
+
+            foreach(var score in PlayersScoreGame)
             {
-                textWinners+= winnersLayoutStr
-                        .Replace("%[PLAYERNAME]%",winner.Key.Name)
-                        .Replace("%[ROUNDSWON]%", winner.Value.ToString()) + "\n";
+                scoreStr += scorePlayerLayoutStr
+                        .Replace("%[PLAYERNAME]%", score.Key.Name)
+                        .Replace("%[SCOREPLAYER]%", score.Value.ToString()) + "\n";
             }
-            tbxDisplayRounds.Text = textWinners;
+
+            foreach(var winnerRound in PlayersScoreRounds)
+            {
+                roundsStr += winnersRoundsLayoutStr
+                        .Replace("%[PLAYERNAME]%",winnerRound.Key.Name)
+                        .Replace("%[ROUNDSWON]%", winnerRound.Value.ToString()) + "\n";
+            }
+            
+            textDisplay = textDisplay.Replace("%[ROUNDS]%", roundsStr);
+            textDisplay = textDisplay.Replace("%[SCORE]%", scoreStr);
+
+            tbxDisplayRounds.Text = textDisplay;
         }
 
         private void RenderSendedCards(object sender, EventArgs e)
         {
-            VerifyTime();
-            if(PlayedCards.Count > 0)
-            {
-                Card cardData = PlayedCards.Last();
-                Image cardImage = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(cardData.Suit.GetDisplayName())));
-                ModifyCardImageInsertValue(ref cardImage, cardData);
-                pbPlayedCard.Image = cardImage; 
-            }
             if (IsAutonomousMode)
             {
-                if (!PlayersInGame.Any(x => x.Value.Any(y => !y.WasUsed)))
+                if (PlayersInGame[LoggedUser].Where(x => !x.WasUsed).ToList().Count == 0)
                     VerifyEndPlay();
 
                 if (IsYourTime)
                     AutonomousSystemPlay(sender, e);   
             }
+
+            VerifyTime();
+            if (PlayedCards.Count > 0)
+            {
+                Card cardData = PlayedCards.Last();
+                Image cardImage = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(cardData.Suit.GetDisplayName())));
+                ModifyCardImageInsertValue(ref cardImage, cardData);
+                pbPlayedCard.Image = cardImage;
+            }
         }
 
         private void AutonomousSystemPlay(object sender, EventArgs e)
         {
-            if (PlayersInGame[LoggedUser].Where(x => !x.WasUsed).ToList().Count == 0)
-                VerifyEndPlay();
-
             List<Card> myCards = PlayersInGame[LoggedUser].Where(x=>!x.WasUsed).ToList();
             Card cardToPlay;
             int cardToPlayIndex = 0;
@@ -251,14 +283,37 @@ namespace POCS_Project.screens
             }
         }
 
+        private void CalculateScore()
+        {
+            foreach(var bet in PlayersBet)
+            {
+                int roundsWon = PlayersScoreRounds[bet.Key];
+                if (bet.Value == roundsWon)
+                    PlayersScoreGame[bet.Key] += 3;
+                else if (bet.Value > roundsWon)
+                    PlayersScoreGame[bet.Key] += roundsWon - bet.Value;
+                else
+                    PlayersScoreGame[bet.Key] -= roundsWon - bet.Value;
+            }
+        }
+
         private void VerifyEndPlay()
         {
-            if(QuantityPlays < PlayersInGame.Count)
+            if(QuantityMatches <= PlayersInGame.Count)
             {
-                QuantityPlays++;
-                DistributeCards();
+                CalculateScore();
                 VerifyTime();
-                RenderPlayersGridCards();
+                List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
+                List<Player> players = PlayersInGame.Keys.ToList();
+
+                // Atualiza as cartas lógicamente
+                foreach (var player in players)
+                    PlayersInGame[player] = cards.Where(x => x.Owner.Id == player.Id).ToList();
+                // Atualiza as cartas visualmente
+                foreach (var player in PlayersGridCards)
+                    RenderCard(player.Key,player.Value);
+
+                QuantityMatches++;
             }
             else
               this.ChangeScreen(new SelectAnExistentGame());
@@ -279,7 +334,6 @@ namespace POCS_Project.screens
                     int indexCard = PlayersInGame[keyLogged].FindIndex(x=>x.Order == cardId);
                     PlayersInGame[keyLogged][indexCard].Value = cardValue;
                     PlayersInGame[LoggedUser][indexCard].WasUsed = true;
-                    RenderPlayersGridCards();
                 }
             }
             catch(Exception error)
@@ -297,7 +351,8 @@ namespace POCS_Project.screens
                 int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                 PlayersInGame[LoggedUser][indexCard].Value = cardValue;
                 PlayersInGame[LoggedUser][indexCard].WasUsed = true;
-                RenderPlayersGridCards();
+                foreach(var player in PlayersGridCards)
+                    RenderCard(player.Key, player.Value);
             }
         }
 
