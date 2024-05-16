@@ -24,6 +24,8 @@ namespace POCS_Project.entities
         [Display(Name = "F")]
         Closed = 2,
         [Display(Name = "T")]
-        All = 3
+        All = 3,
+        [Display(Name = "E")]
+        Finished = 4
     }
 }

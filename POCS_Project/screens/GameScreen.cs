@@ -23,7 +23,7 @@ namespace POCS_Project.screens
         private int IdInitPlayer;
         private bool IsAutonomousMode = false;
         private bool IsYourTime = false;
-        private int QuantityMatches = 1;
+        private int CurrentRound = 1;
         private readonly Game _gameData;
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
@@ -148,8 +148,10 @@ namespace POCS_Project.screens
             string[] gameData = Regex.Split(dataVerifyTime[0], ",");
             IdInitPlayer = Convert.ToInt32(gameData[1]);
             
+            _gameData.Situation = gameData[0].SearchEnumByDisplayName<GameSituation>();
+
             /* definição de vez */
-            if (gameData.Length > 0)
+            if (gameData.Length > 0 && _gameData.Situation != GameSituation.Closed)
             {
                 if (IdInitPlayer == LoggedUser.Id)
                 {
@@ -158,9 +160,8 @@ namespace POCS_Project.screens
                 }
                 else
                     lblPlayerTimeIndicator.Text = $"É a vez de {PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}";
-                
             }
-
+                
             /* Verificação de apostas */
             foreach(var data in dataVerifyTime)
             {
@@ -192,6 +193,7 @@ namespace POCS_Project.screens
                 PlayedCards = playedCards;
             }
 
+            CurrentRound = Convert.ToInt32(gameData[2]);
             IsYourTime = response;
         }
 
@@ -227,6 +229,7 @@ namespace POCS_Project.screens
 
         private void RenderSendedCards(object sender, EventArgs e)
         {
+            VerifyTime();
             if (IsAutonomousMode)
             {
                 if (PlayersInGame[LoggedUser].Where(x => !x.WasUsed).ToList().Count == 0)
@@ -236,7 +239,6 @@ namespace POCS_Project.screens
                     AutonomousSystemPlay(sender, e);   
             }
 
-            VerifyTime();
             if (PlayedCards.Count > 0)
             {
                 Card cardData = PlayedCards.Last();
@@ -249,6 +251,11 @@ namespace POCS_Project.screens
         private void AutonomousSystemPlay(object sender, EventArgs e)
         {
             List<Card> myCards = PlayersInGame[LoggedUser].Where(x=>!x.WasUsed).ToList();
+            if (myCards.Count == 0)
+            {
+                VerifyEndPlay();
+                return;
+            }
             Card cardToPlay;
             int cardToPlayIndex = 0;
 
@@ -299,24 +306,20 @@ namespace POCS_Project.screens
 
         private void VerifyEndPlay()
         {
-            if(QuantityMatches <= PlayersInGame.Count)
-            {
-                CalculateScore();
-                VerifyTime();
-                List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
-                List<Player> players = PlayersInGame.Keys.ToList();
+            CalculateScore();
+            VerifyTime();
+            List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
+            List<Player> players = PlayersInGame.Keys.ToList();
 
-                // Atualiza as cartas lógicamente
-                foreach (var player in players)
-                    PlayersInGame[player] = cards.Where(x => x.Owner.Id == player.Id).ToList();
-                // Atualiza as cartas visualmente
-                foreach (var player in PlayersGridCards)
-                    RenderCard(player.Key,player.Value);
-
-                QuantityMatches++;
-            }
-            else
-              this.ChangeScreen(new SelectAnExistentGame());
+            // Atualiza as cartas lógicamente
+            foreach (var player in players)
+                PlayersInGame[player] = cards.Where(x => x.Owner.Id == player.Id).ToList();
+            // Atualiza as cartas visualmente
+            foreach (var player in PlayersGridCards)
+                RenderCard(player.Key,player.Value);
+            
+            if(_gameData.Situation == GameSituation.Closed)
+                this.ChangeScreen(new SelectAnExistentGame());
         }
 
         private void SendCard(object sender, EventArgs e)
