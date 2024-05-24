@@ -20,11 +20,11 @@ namespace POCS_Project.screens
 {
     public partial class GameScreen : Form
     {
-        private int IdInitPlayer;
+        private Player WhoPlay;
         private bool IsAutonomousMode = false;
         private bool IsYourTime = false;
         private int CurrentRound = 1;
-        private readonly Game _gameData;
+        private Game _gameData;
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
         private readonly Player LoggedUser;
@@ -142,58 +142,26 @@ namespace POCS_Project.screens
         private void VerifyTime()
         {
             bool response = false;
-            string strVerifyTime = Jogo.VerificarVez(_gameData.Id);
-            string[] dataVerifyTime = Regex.Split(strVerifyTime, "\r\n");
-            Array.Resize(ref dataVerifyTime, dataVerifyTime.Length - 1);
-            string[] gameData = Regex.Split(dataVerifyTime[0], ",");
-            IdInitPlayer = Convert.ToInt32(gameData[1]);
+            string[] gameStrStatus = _gameController.GetGameStatus(_gameData.Id, ref _gameData, ref WhoPlay, ref CurrentRound);
             
-            _gameData.Situation = gameData[0].SearchEnumByDisplayName<GameSituation>();
-
             /* definição de vez */
-            if (gameData.Length > 0 && _gameData.Situation != GameSituation.Closed)
+            if (WhoPlay != null && _gameData.Situation != GameSituation.Closed)
             {
-                if (IdInitPlayer == LoggedUser.Id)
-                {
-                    response = true;
-                    lblPlayerTimeIndicator.Text = "É a sua vez!";
-                }
-                else
-                    lblPlayerTimeIndicator.Text = $"É a vez de {PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(gameData[1])).Key.Name}";
+                response = WhoPlay.Id == LoggedUser.Id;
+                lblPlayerTimeIndicator.Text = response? "É a sua vez!" : $"É a vez de {WhoPlay.Name}";
             }
-                
+
             /* Verificação de apostas */
-            foreach(var data in dataVerifyTime)
-            {
-                if (data.StartsWith("A:"))
-                {
-                    var arrData = Regex.Split(data, ",");
-                    int idPlayer = Convert.ToInt32(Regex.Split(arrData[0], ":")[1]);
-                    Player whoBet = PlayersInGame.FirstOrDefault(x=>x.Key.Id == idPlayer).Key;
-                    PlayersBet[whoBet] = Convert.ToInt32(arrData[2]);
-                }
-            }
+            if (gameStrStatus.Any(x => x.StartsWith("A:")))
+                _gameController.GetBet(_gameData.Id, ref PlayersBet);
 
             /* Separação das cartas jogadas */
-            if (dataVerifyTime.Count() > 1)
+            if (gameStrStatus.Count() > 1)
             {
                 VerifyRounds();
-                dataVerifyTime = dataVerifyTime.Skip(1).ToArray();
-                List<Card> playedCards = new List<Card>();
-                foreach(string cardData in dataVerifyTime)
-                {
-                    var data = Regex.Split(cardData.Substring(2),",");
-                    playedCards.Add(new Card
-                    {
-                        Owner = PlayersInGame.FirstOrDefault(x => x.Key.Id == Convert.ToInt32(data[0])).Key,
-                        Suit = (Suits)data[1][0],
-                        Value = Convert.ToInt32(data[2])
-                    });
-                }
-                PlayedCards = playedCards;
+                PlayedCards = _gameController.GetPlayedCards(_gameData.Id, PlayersInGame.Keys.ToList());
             }
 
-            CurrentRound = Convert.ToInt32(gameData[2]);
             IsYourTime = response;
         }
 
@@ -202,8 +170,8 @@ namespace POCS_Project.screens
             PlayersScoreRounds = _gameController.GetWinners(_gameData.Id, PlayersInGame.Keys.ToList());
             string scoreStr = "",
                    roundsStr = "",
-                   scorePlayerLayoutStr = "    %[PLAYERNAME]% - %[SCOREPLAYER]%",
-                   winnersRoundsLayoutStr = "    %[PLAYERNAME]% - %[ROUNDSWON]%",
+                   scorePlayerLayoutStr = "    %[PLAYERNAME]%: %[SCOREPLAYER]%",
+                   winnersRoundsLayoutStr = "    %[PLAYERNAME]%: %[ROUNDSWON]%",
                    textDisplay= "Score:\n%[SCORE]%\nRounds:\n%[ROUNDS]%"
             ;
 
@@ -410,6 +378,7 @@ namespace POCS_Project.screens
             };
             MyTimer.Tick += new EventHandler(RenderSendedCards);
             MyTimer.Start();
+            GameScreen_SizeChanged(sender, e);
         }
 
         private void GameScreen_SizeChanged(object sender, EventArgs e)

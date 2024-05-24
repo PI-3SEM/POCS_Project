@@ -2,6 +2,7 @@
 using NPOI.XSSF.Streaming.Values;
 using NPOI.XSSF.UserModel;
 using POCS_Project.entities;
+using POCS_Project.utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,19 +97,19 @@ namespace POCS_Project.controllers
         {
             Dictionary<string, int[]> sepCardsPlayed = FirstStep(playeds);
             Dictionary<string, int[]> sepMyCards = FirstStep(myCards);
-
+            string lastSuitPlayed = playeds.Last().Suit.ToString();
             //primeira naipe carta playeds.First().Suit
 
             //verifica se mais de um naipe e busca saber qual é
-            if (sepCardsPlayed.Keys.Count() > 0 && !sepMyCards.Keys.Contains(sepCardsPlayed.Keys.First()))
+            if (sepCardsPlayed.Keys.Count() > 0 && !sepMyCards.Keys.Contains(lastSuitPlayed))
                 return ReadStepValues(sepMyCards, myCards, "Heart").First();
             else
             {
-                if (sepMyCards.Any(some => some.Key == sepCardsPlayed.Keys.ToList().First()))
+                if (sepMyCards.Any(some => some.Key == lastSuitPlayed))
                 {
-                    int[] equalCards = ReadStepValues(sepMyCards, myCards, sepCardsPlayed.Keys.ToList()[0]); // Retorna os index's de suas cartas com esse naipe
-                    int[] playedValues = ReadStepValues(sepCardsPlayed, playeds, sepCardsPlayed.Keys.ToList()[0]);
-                    return playedValues.Max(x => x > equalCards.Last() && sepCardsPlayed.Keys.ToList()[0] != "Heart") ? equalCards.First() : equalCards.Last();
+                    int[] equalCards = ReadStepValues(sepMyCards, myCards, lastSuitPlayed); // Retorna os index's de suas cartas com esse naipe
+                    int[] playedValues = ReadStepValues(sepCardsPlayed, playeds, lastSuitPlayed);
+                    return playedValues.Max(x => x > equalCards.Last() && lastSuitPlayed != "Heart") ? equalCards.First() : equalCards.Last();
                 }
             }
 
