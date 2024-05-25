@@ -38,5 +38,13 @@ namespace POCS_Project.entities
         Heart = 'C',
         [Display(Name = "Espada")]
         Spade = 'E',
+        [Display(Name = "Lua")]
+        Moon = 'L',
+        [Display(Name = "Paus")]
+        Clubs = 'P',
+        [Display(Name = "Triângulo")]
+        Triangle = 'T',
+        [Display(Name = "Estrela")]
+        Star = 'S'
     }
 }

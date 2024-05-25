@@ -96,7 +96,9 @@ namespace POCS_Project.controllers
             var response = new List<Card>();
             try
             {
-                foreach(string strCard in Regex.Split(Jogo.ConsultarMao(gameId),"\r\n"))
+                string[] arrStrCards = Regex.Split(Jogo.ConsultarMao(gameId), "\r\n");
+                
+                foreach (string strCard in arrStrCards)
                 {
                     string[] cardData = Regex.Split(strCard, ",");
                     response.Add(new Card
