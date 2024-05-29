@@ -5,7 +5,6 @@ namespace POCS_Project.utils
 {
     public static class ScreenSelector
     {
-
         private static Form _NextScreen { get; set; }
 
         private static void InitNewScreen()
