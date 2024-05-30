@@ -115,9 +115,8 @@ namespace POCS_Project.screens
                 }
                 else
                 {
-                    indexColumn = indexColumn == 0 ? 2 : 0;
                     if (indexColumn == 0) indexRow++;
-                    grid.Controls.Add(pbCard, indexColumn, indexRow);
+                    grid.Controls.Add(pbCard, (indexColumn++ % 2) - 1, indexRow);
                 }
             }
 
@@ -125,6 +124,11 @@ namespace POCS_Project.screens
             {
                 row.SizeType = SizeType.Absolute;
                 row.Height = CardStyle.y;
+            }
+            foreach (ColumnStyle col in grid.ColumnStyles)
+            {
+                col.SizeType = SizeType.Absolute;
+                col.Width = CardStyle.x;
             }
         }
 
@@ -327,7 +331,14 @@ namespace POCS_Project.screens
                     playersGridCards.Value.Dock = possiblePosition[0];
                     possiblePosition = possiblePosition.Skip(1).ToArray();
                 }
-                playersGridCards.Value.Height = CardStyle.y*2-40;
+                if (playersGridCards.Value.Dock == DockStyle.Top || playersGridCards.Value.Dock == DockStyle.Bottom)
+                    playersGridCards.Value.Height = CardStyle.y * 2;
+                else
+                    playersGridCards.Value.Width = CardStyle.x * 2 + 10;
+            }
+            /* ordenação da renderização */
+            foreach(var playersGridCards in PlayersGridCards.OrderBy(x=>x.Value.Dock))
+            {
                 pnlGame.Controls.Add(playersGridCards.Value);
                 RenderCard(playersGridCards.Key, playersGridCards.Value);
             }
