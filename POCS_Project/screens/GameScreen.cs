@@ -27,6 +27,7 @@ namespace POCS_Project.screens
         private Game _gameData;
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
+        private readonly ImageController _imageController = new ImageController();
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
@@ -71,42 +72,31 @@ namespace POCS_Project.screens
             grid.RowCount = 0;
             grid.ColumnCount = 0;
 
-            List<Card> cards = PlayersInGame.FirstOrDefault(x => x.Key.Equals(player)).Value;
+            List<Card> cards = PlayersInGame[player];
             int indexColumn = 0;
             int indexRow = 0;
 
-            if (grid.Dock == DockStyle.Top || grid.Dock == DockStyle.Bottom)
-            {
-                grid.RowCount = 2;
-                grid.ColumnCount = 6;
-            }
-            else
-            {
-                grid.RowCount = 6;
-                grid.ColumnCount = 2;
-            }
+            bool isTopOrBottom = grid.Dock == DockStyle.Top || grid.Dock == DockStyle.Bottom;
+            grid.RowCount = isTopOrBottom ? 2: cards.Count / 2;
+            grid.ColumnCount = isTopOrBottom ? cards.Count / 2 : 2;
+
 
             foreach (Card card in cards)
             {
 
-                Panel pbCard = new Panel();
+                Panel pbCard = new Panel
                 {
-                    BackgroundImageLayout = ImageLayout.Center;
+                    BackgroundImageLayout = ImageLayout.Center,
+                    MaximumSize = new Size(CardStyle.x, CardStyle.y + 5)
                 };
-                pbCard.MaximumSize = new Size(CardStyle.x, CardStyle.y + 5);
 
-
+                Image image = Image.FromFile(CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName())));
+                
                 if (card.WasUsed)
-                {
-                    pbCard.BackgroundImage = base.BackgroundImage;
-                }
-                else
-                {
-                    string item = CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName()));
-                    pbCard.BackgroundImage = Image.FromFile(item);
-                }
-
-
+                    _imageController.TurnImageBlackAndWhite(ref image);
+                pbCard.BackgroundImage = image;
+                
+                /* Feature da proposta inicial de poder jogar sem modo autônomo */
                 if(player.Id == LoggedUser.Id)
                 {
                     pbCard.Click += SendCard;
@@ -114,15 +104,14 @@ namespace POCS_Project.screens
                     pbCard.Name = $"{card.Order},{card.Owner.Id}";
                 }
 
-                if (grid.Dock == DockStyle.Top || grid.Dock == DockStyle.Bottom)
+                if (isTopOrBottom)
                 {
-                    if (indexColumn >= 6)
+                    if (indexColumn >= cards.Count/2)
                     {
                         indexRow = 2;
                         indexColumn = 0;
                     }
-                    grid.Controls.Add(pbCard, indexColumn, indexRow);
-                    indexColumn++;
+                    grid.Controls.Add(pbCard, indexColumn++, indexRow);
                 }
                 else
                 {
@@ -211,7 +200,7 @@ namespace POCS_Project.screens
             {
                 Card cardData = PlayedCards.Last();
                 Image cardImage = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(cardData.Suit.GetDisplayName())));
-                ModifyCardImageInsertValue(ref cardImage, cardData);
+                _imageController.ModifyCardImageInsertValue(ref cardImage, cardData);
                 pbPlayedCard.Image = cardImage;
             }
         }
@@ -327,29 +316,10 @@ namespace POCS_Project.screens
             }
         }
 
-        private void ModifyCardImageInsertValue(ref Image cardImage, Card cardData)
-        {
-            var grafic = Graphics.FromImage(cardImage);
-            grafic.DrawString(
-                Convert.ToString(cardData.Value),
-                new Font("arial", 10F, FontStyle.Regular),
-                Brushes.Black,
-                new PointF(10, 5)
-            );
-            grafic.DrawString(
-                Convert.ToString(cardData.Value),
-                new Font("arial", 10F, FontStyle.Regular),
-                Brushes.Black,
-                new PointF(cardImage.Width - 10, 5)
-            );
-            grafic.Dispose();
-        }
-
         private void RenderPlayersGridCards() {
+            DockStyle[] possiblePosition = { DockStyle.Top, DockStyle.Left, DockStyle.Right };
             foreach(var playersGridCards in PlayersGridCards)
             {
-                DockStyle[] possiblePosition = { DockStyle.Top, DockStyle.Left, DockStyle.Right };
-
                 if (playersGridCards.Key.Id == LoggedUser.Id)
                     playersGridCards.Value.Dock = DockStyle.Bottom;
                 else

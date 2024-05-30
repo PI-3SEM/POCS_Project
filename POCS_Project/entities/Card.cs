@@ -27,8 +27,8 @@ namespace POCS_Project.entities
         public List<string> pathsPlayed = Directory.GetFiles("Assets", "*.png")
             .Where(x=>x.Contains("Virada"))
             .ToList();
-        public int x = 90;
-        public int y = 130;
+        public int x = 60;
+        public int y = 90;
     }
 
     public enum Suits{
