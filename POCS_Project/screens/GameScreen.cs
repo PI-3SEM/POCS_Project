@@ -89,11 +89,13 @@ namespace POCS_Project.screens
                     BackgroundImageLayout = ImageLayout.Center,
                     MaximumSize = new Size(CardStyle.x, CardStyle.y + 5)
                 };
-
-                Image image = Image.FromFile(CardStyle.pathsNotPlayed.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName())));
-                
+                List<string> pathImage = !card.WasUsed?CardStyle.pathsNotPlayed:CardStyle.pathsPlayed;
+                Image image = Image.FromFile(pathImage.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName())));
                 if (card.WasUsed)
+                {
                     _imageController.TurnImageBlackAndWhite(ref image);
+                    _imageController.ModifyCardImageInsertValue(ref image, card);
+                }
                 pbCard.BackgroundImage = image;
                 
                 /* Feature da proposta inicial de poder jogar sem modo autônomo */
@@ -128,7 +130,7 @@ namespace POCS_Project.screens
             foreach (ColumnStyle col in grid.ColumnStyles)
             {
                 col.SizeType = SizeType.Absolute;
-                col.Width = CardStyle.x;
+                col.Width = CardStyle.x + 15;
             }
         }
 
@@ -223,7 +225,7 @@ namespace POCS_Project.screens
             Dictionary<string, int[]> lol = _logicController.FirstStep(myCards);
 
             if (PlayedCards.Count > 0)
-                cardToPlayIndex = myCards.FindIndex(x=>x.Order == _logicController.AfterThem(PlayedCards, myCards));
+                cardToPlayIndex = myCards.FindIndex(x=>x.Order == _logicController.AfterThem(PlayedCards, myCards, CurrentRound));
             else
                 cardToPlayIndex = myCards.FindIndex(x => x.Order == _logicController.FirstPlay(myCards));
 
@@ -334,7 +336,7 @@ namespace POCS_Project.screens
                 if (playersGridCards.Value.Dock == DockStyle.Top || playersGridCards.Value.Dock == DockStyle.Bottom)
                     playersGridCards.Value.Height = CardStyle.y * 2;
                 else
-                    playersGridCards.Value.Width = CardStyle.x * 2 + 10;
+                    playersGridCards.Value.Width = CardStyle.x * 2 + 30;
             }
             /* ordenação da renderização */
             foreach(var playersGridCards in PlayersGridCards.OrderBy(x=>x.Value.Dock))

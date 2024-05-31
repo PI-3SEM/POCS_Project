@@ -57,6 +57,8 @@ namespace POCS_Project.controllers
                         g.DrawImage(originalBitmap, new Rectangle(0, 0, grayscaleBitmap.Width, grayscaleBitmap.Height),
                             0, 0, originalBitmap.Width, originalBitmap.Height, GraphicsUnit.Pixel, attributes);
                     }
+                    originalImage.Dispose();
+                    originalImage = new Bitmap(grayscaleBitmap);
                 }
             }
         }

@@ -168,6 +168,7 @@ namespace POCS_Project.controllers
                 var data = Regex.Split(cardData, ",");
                 playedCards.Add(new Card
                 {
+                    RoundPlayed = Convert.ToInt32(data[0]),
                     Owner = playersInGame.FirstOrDefault(x => x.Id == Convert.ToInt32(data[1])),
                     Suit = (Suits)data[2][0],
                     Value = Convert.ToInt32(data[3])

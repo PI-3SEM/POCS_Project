@@ -33,7 +33,6 @@ namespace POCS_Project.controllers
                 if (index.Count() > 0 && flag != true)
                     dataCards.Add(cards[index[0]].Suit.ToString(), index.ToArray());
                 
-
             }
 
             return dataCards;
@@ -93,23 +92,23 @@ namespace POCS_Project.controllers
 
         }
 
-        public int AfterThem(List<Card> playeds, List<Card> myCards)
+        public int AfterThem(List<Card> playeds, List<Card> myCards, int currentRound)
         {
             Dictionary<string, int[]> sepCardsPlayed = FirstStep(playeds);
             Dictionary<string, int[]> sepMyCards = FirstStep(myCards);
-            string lastSuitPlayed = playeds.Last().Suit.ToString();
-            //primeira naipe carta playeds.First().Suit
+            Card firstCardPlayedInThisRound = playeds.FirstOrDefault(x => x.RoundPlayed == currentRound);
+            string firstSuitPlayedInThisRound = firstCardPlayedInThisRound != null? firstCardPlayedInThisRound.Suit.ToString() : playeds.First().Suit.ToString();
 
             //verifica se mais de um naipe e busca saber qual é
-            if (sepCardsPlayed.Keys.Count() > 0 && !sepMyCards.Keys.Contains(lastSuitPlayed))
+            if (firstSuitPlayedInThisRound != null && sepCardsPlayed.Keys.Count() > 0 && !sepMyCards.Keys.Contains(firstSuitPlayedInThisRound))
                 return ReadStepValues(sepMyCards, myCards, "Heart").First();
             else
             {
-                if (sepMyCards.Any(some => some.Key == lastSuitPlayed))
+                if (sepMyCards.Any(some => some.Key == firstSuitPlayedInThisRound))
                 {
-                    int[] equalCards = ReadStepValues(sepMyCards, myCards, lastSuitPlayed); // Retorna os index's de suas cartas com esse naipe
-                    int[] playedValues = ReadStepValues(sepCardsPlayed, playeds, lastSuitPlayed);
-                    return playedValues.Max(x => x > equalCards.Last() && lastSuitPlayed != "Heart") ? equalCards.First() : equalCards.Last();
+                    int[] equalCards = ReadStepValues(sepMyCards, myCards, firstSuitPlayedInThisRound); // Retorna os index's de suas cartas com esse naipe
+                    int[] playedValues = ReadStepValues(sepCardsPlayed, playeds, firstSuitPlayedInThisRound);
+                    return playedValues.Max(x => x > equalCards.Last() && firstSuitPlayedInThisRound != "Heart") ? equalCards.First() : equalCards.Last();
                 }
             }
 
