@@ -121,10 +121,11 @@ namespace POCS_Project.controllers
             Dictionary<Player, int> response = new Dictionary<Player, int>();
             Dictionary<int, List<Round>> roundsGrouped = new Dictionary<int, List<Round>>();
             string plays = Jogo.ExibirJogadas(gameId);
-            string[] playsArr = Regex.Split(plays, "\r\n").Where(x=>x.Count() > 0).ToArray();
-            
+            string[] playsArr = Regex.Split(plays, "\r\n");
+            Array.Resize(ref playsArr, playsArr.Length - 1);
+
             /* separa os rounds jogados em id's */
-            foreach(string dataPlay in playsArr)
+            foreach (string dataPlay in playsArr)
             {
                 string[] data = Regex.Split(dataPlay, ",");
                 int idRound = Convert.ToInt32(data[0]);
@@ -143,6 +144,11 @@ namespace POCS_Project.controllers
                     }
                 });
             }
+
+            if (roundsGrouped.Count == 0)
+                foreach (Player player in playersInGame)
+                    response.Add(player, 0);
+
             /* conta quantidade de rodadas ganhas por cada jogador */
             foreach (KeyValuePair<int, List<Round>> rounds in roundsGrouped)
             {
@@ -159,7 +165,7 @@ namespace POCS_Project.controllers
     
         public List<Card> GetPlayedCards(int gameId, List<Player> playersInGame)
         {
-            string[] strPlayedCards = Regex.Split(Jogo.ExibirJogadas(gameId), "\r\n");
+            string[] strPlayedCards = Regex.Split(Jogo.ExibirJogadas2(gameId), "\r\n");
             Array.Resize(ref strPlayedCards, strPlayedCards.Length - 1);
 
             List<Card> playedCards = new List<Card>();
@@ -171,7 +177,8 @@ namespace POCS_Project.controllers
                     RoundPlayed = Convert.ToInt32(data[0]),
                     Owner = playersInGame.FirstOrDefault(x => x.Id == Convert.ToInt32(data[1])),
                     Suit = (Suits)data[2][0],
-                    Value = Convert.ToInt32(data[3])
+                    Value = Convert.ToInt32(data[3]),
+                    Order = Convert.ToInt32(data[4]),
                 });
             }
             return playedCards;

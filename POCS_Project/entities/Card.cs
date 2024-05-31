@@ -10,7 +10,6 @@ namespace POCS_Project.entities
 {
     public class Card
     {
-        public int Round { get; set; }
         public Player Owner { get; set; }
         public int Order { get; set; }
         public Suits Suit { get; set; }

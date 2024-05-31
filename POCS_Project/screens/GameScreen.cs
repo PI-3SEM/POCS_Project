@@ -81,6 +81,12 @@ namespace POCS_Project.screens
             grid.ColumnCount = isTopOrBottom ? cards.Count / 2 : 2;
 
 
+            /*Verificação se a carta foi usada*/
+            for(int i = 0; i < cards.Count; i++)
+                if (PlayedCards.Where(x => x.Owner == player).Any(x => x.Order == PlayersInGame[player][i].Order))
+                    PlayersInGame[player][i].WasUsed = true;
+            
+            cards = PlayersInGame[player];
             foreach (Card card in cards)
             {
 
@@ -91,6 +97,7 @@ namespace POCS_Project.screens
                 };
                 List<string> pathImage = !card.WasUsed?CardStyle.pathsNotPlayed:CardStyle.pathsPlayed;
                 Image image = Image.FromFile(pathImage.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName())));
+
                 if (card.WasUsed)
                 {
                     _imageController.TurnImageBlackAndWhite(ref image);
@@ -125,7 +132,7 @@ namespace POCS_Project.screens
             foreach (RowStyle row in grid.RowStyles)
             {
                 row.SizeType = SizeType.Absolute;
-                row.Height = CardStyle.y;
+                row.Height = CardStyle.y + 15;
             }
             foreach (ColumnStyle col in grid.ColumnStyles)
             {
@@ -255,6 +262,7 @@ namespace POCS_Project.screens
 
         private void CalculateScore()
         {
+            if(PlayersScoreRounds.Count == _gameData.Players.Count)
             foreach(var bet in PlayersBet)
             {
                 int roundsWon = PlayersScoreRounds[bet.Key];
@@ -334,7 +342,7 @@ namespace POCS_Project.screens
                     possiblePosition = possiblePosition.Skip(1).ToArray();
                 }
                 if (playersGridCards.Value.Dock == DockStyle.Top || playersGridCards.Value.Dock == DockStyle.Bottom)
-                    playersGridCards.Value.Height = CardStyle.y * 2;
+                    playersGridCards.Value.Height = CardStyle.y * 2 + 30;
                 else
                     playersGridCards.Value.Width = CardStyle.x * 2 + 30;
             }
