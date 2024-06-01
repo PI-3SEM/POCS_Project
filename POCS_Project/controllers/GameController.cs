@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace POCS_Project.controllers
 {
-    public class GameController
+    public class GameController:Controller
     {
         private readonly PlayersController _playersController;
 
@@ -31,12 +31,13 @@ namespace POCS_Project.controllers
             {
                 string[] arrGameData = Regex.Split(game, ",");
                 int id = Convert.ToInt32(arrGameData[0]);
+
                 response.Add(new Game
                 {
                     Id = id,
                     Name = arrGameData[1],
                     Situation = arrGameData[3].SearchEnumByDisplayName<GameSituation>(),
-                    Players = _playersController.GetAllPlayers(id)
+                    Players = _playersController.GetPlayersInGame(id)
                 });
             }
 
@@ -73,17 +74,9 @@ namespace POCS_Project.controllers
             }
         }
 
-        private string[] GetGameStrStatus(int gameId)
-        {
-            string strVerifyTime = Jogo.VerificarVez(gameId);
-            string[] dataVerifyTime = Regex.Split(strVerifyTime, "\r\n");
-            Array.Resize(ref dataVerifyTime, dataVerifyTime.Length - 1);
-            return dataVerifyTime;
-        }
-
         public string[] GetGameStatus(int gameId, ref Game game, ref Player whoPlay, ref int currentRound)
         {
-            string[] gameStrStatus = GetGameStrStatus(gameId);            
+            string[] gameStrStatus = GetStrStatus(Jogo.VerificarVez2(gameId));            
             string[] gameData = Regex.Split(gameStrStatus[0], ",");
             game.Situation = gameData[0].SearchEnumByDisplayName<GameSituation>();
             whoPlay = game.Players.FirstOrDefault(x=>x.Id == Convert.ToInt32(gameData[1]));
@@ -116,60 +109,10 @@ namespace POCS_Project.controllers
             return response;
         }
     
-        public Dictionary<Player, int> GetWinners(int gameId, List<Player> playersInGame)
-        {
-            Dictionary<Player, int> response = new Dictionary<Player, int>();
-            Dictionary<int, List<Round>> roundsGrouped = new Dictionary<int, List<Round>>();
-            string plays = Jogo.ExibirJogadas(gameId);
-            string[] playsArr = Regex.Split(plays, "\r\n");
-            Array.Resize(ref playsArr, playsArr.Length - 1);
-
-            /* separa os rounds jogados em id's */
-            foreach (string dataPlay in playsArr)
-            {
-                string[] data = Regex.Split(dataPlay, ",");
-                int idRound = Convert.ToInt32(data[0]);
-                int idPLayer = Convert.ToInt32(data[1]);
-                Suits suitCard = (Suits)data[2][0];
-                int valueCard = Convert.ToInt32(data[3]);
-                if(!roundsGrouped.ContainsKey(idRound))
-                   roundsGrouped.Add(idRound,new List<Round>());
-                roundsGrouped[idRound].Add(new Round {
-                    Id = idRound,
-                    IdPLayer = idPLayer,
-                    CardPlayed = new Card
-                    {
-                        Suit = suitCard,
-                        Value = valueCard,
-                    }
-                });
-            }
-
-            if (roundsGrouped.Count == 0)
-                foreach (Player player in playersInGame)
-                    response.Add(player, 0);
-
-            /* conta quantidade de rodadas ganhas por cada jogador */
-            foreach (KeyValuePair<int, List<Round>> rounds in roundsGrouped)
-            {
-                // pegando o jogador que jogou a maior carta
-                Player winner = playersInGame.FirstOrDefault(x => x.Id == rounds.Value.FirstOrDefault(y => y.CardPlayed.Value == rounds.Value.Max(z => z.CardPlayed.Value)).IdPLayer);
-                if(response.Count == 0 || !response.Keys.Contains(winner))
-                    response.Add(winner, 1);
-                else
-                    response[winner]++;
-            }
-            
-            return response;
-        }
-    
         public List<Card> GetPlayedCards(int gameId, List<Player> playersInGame)
         {
-            string[] strPlayedCards = Regex.Split(Jogo.ExibirJogadas2(gameId), "\r\n");
-            Array.Resize(ref strPlayedCards, strPlayedCards.Length - 1);
-
             List<Card> playedCards = new List<Card>();
-            foreach (string cardData in strPlayedCards)
+            foreach (string cardData in GetStrStatus(Jogo.ExibirJogadas2(gameId)))
             {
                 var data = Regex.Split(cardData, ",");
                 playedCards.Add(new Card
@@ -186,7 +129,7 @@ namespace POCS_Project.controllers
 
         public void GetBet(int gameId, ref Dictionary<Player, int> playersBet)
         {
-            string[] gameStrStatus = GetGameStrStatus(gameId);
+            string[] gameStrStatus = GetStrStatus(Jogo.VerificarVez2(gameId));
             foreach (var data in gameStrStatus.Where(x => x.StartsWith("A:")))
             {
                 var arrData = Regex.Split(data, ",");

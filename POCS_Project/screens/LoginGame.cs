@@ -85,7 +85,7 @@ namespace POCS_Project.screens
             try
             {
                 LoggedPlayer = _playersController.EnterInGame(tbxPlayerName.Text, tbxPasswordGame.Text,_gameData.Id);
-                _gameData.Players = _playersController.GetAllPlayers(_gameData.Id);
+                _gameData.Players = _playersController.GetPlayersInGame(_gameData.Id);
                 loadGameData(_gameData);
                 tbxPlayerName.Enabled = false;
                 tbxPasswordGame.Enabled = false;
@@ -102,7 +102,7 @@ namespace POCS_Project.screens
         {
             try
             {
-                _gameData.Players = _playersController.GetAllPlayers(_gameData.Id);
+                _gameData.Players = _playersController.GetPlayersInGame(_gameData.Id);
                 var idInitPlayer = _gameController.InitGame(LoggedPlayer.Id, LoggedPlayer.Password);
                 var gameScreen = new GameScreen(LoggedPlayer, _gameData, IsAutonomousMode);
                 this.ChangeScreen(gameScreen);

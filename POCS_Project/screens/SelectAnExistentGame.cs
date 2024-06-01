@@ -44,7 +44,7 @@ namespace POCS_Project
                 string playerText = "";
                 foreach(var player in game.Players)
                 {
-                    playerText += $"Jogador {player.Id}: {player.Name}\nPontuação: {player.Record}\n";
+                    playerText += $"Jogador {player.Id}: {player.Name}\n";
                 }
                 textPlayerLabel.Text = playerText;
                 textPlayerLabel.Size = new System.Drawing.Size(textPlayerLabel.Size.Width, textPlayerLabel.Size.Width * game.Players.Count);

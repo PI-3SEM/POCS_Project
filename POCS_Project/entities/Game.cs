@@ -10,11 +10,12 @@ namespace POCS_Project.entities
 {
     public class Game
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public GameSituation Situation { get; set; }
-        public List<Player> Players {get;set;}
+        public int Id;
+        public string Name;
+        public GameSituation Situation;
+        public List<Player> Players;
     }
+
     public enum GameSituation
     {
         [Display(Name = "A")]

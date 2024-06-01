@@ -28,11 +28,10 @@ namespace POCS_Project.screens
         private readonly GameController _gameController = new GameController();
         private readonly LogicController _logicController = new LogicController();
         private readonly ImageController _imageController = new ImageController();
+        private readonly PlayersController _playerController = new PlayersController();
         private readonly Player LoggedUser;
         private Dictionary<Player, List<Card>> PlayersInGame = new Dictionary<Player, List<Card>>();
         private Dictionary<Player, TableLayoutPanel> PlayersGridCards = new Dictionary<Player, TableLayoutPanel>();
-        private Dictionary<Player, int> PlayersScoreRounds = new Dictionary<Player, int>();
-        private Dictionary<Player, int> PlayersScoreGame = new Dictionary<Player, int>();
         private Dictionary<Player, int> PlayersBet = new Dictionary<Player, int>();
         private List<Card> PlayedCards = new List<Card>();
         private CardStyle CardStyle = new CardStyle();
@@ -59,10 +58,7 @@ namespace POCS_Project.screens
                 PlayersInGame.Add(player, cards.Where(x => x.Owner == player).ToList());
                 PlayersGridCards.Add(player, new TableLayoutPanel { CellBorderStyle = TableLayoutPanelCellBorderStyle.Single });
                 if (PlayersBet.Count < PlayersInGame.Count)
-                {
                     PlayersBet.Add(player, 0);
-                    PlayersScoreGame.Add(player, 0);
-                }
             }
         }
         
@@ -169,7 +165,7 @@ namespace POCS_Project.screens
 
         private void VerifyRounds()
         {
-            PlayersScoreRounds = _gameController.GetWinners(_gameData.Id, PlayersInGame.Keys.ToList());
+            _playerController.UpdateGameScore(_gameData.Id,ref _gameData.Players);
             string scoreStr = "",
                    roundsStr = "",
                    scorePlayerLayoutStr = "    %[PLAYERNAME]%: %[SCOREPLAYER]%",
@@ -177,18 +173,16 @@ namespace POCS_Project.screens
                    textDisplay= "Score:\n%[SCORE]%\nRounds:\n%[ROUNDS]%"
             ;
 
-            foreach(var score in PlayersScoreGame)
+
+            foreach(Player player in _gameData.Players)
             {
                 scoreStr += scorePlayerLayoutStr
-                        .Replace("%[PLAYERNAME]%", score.Key.Name)
-                        .Replace("%[SCOREPLAYER]%", score.Value.ToString()) + "\n";
-            }
-
-            foreach(var winnerRound in PlayersScoreRounds)
-            {
+                        .Replace("%[PLAYERNAME]%", player.Name)
+                        .Replace("%[SCOREPLAYER]%", player.Score.ToString()) + "\n";
+                
                 roundsStr += winnersRoundsLayoutStr
-                        .Replace("%[PLAYERNAME]%",winnerRound.Key.Name)
-                        .Replace("%[ROUNDSWON]%", winnerRound.Value.ToString()) + "\n";
+                        .Replace("%[PLAYERNAME]%",player.Name)
+                        .Replace("%[ROUNDSWON]%", player.RoundsWon.ToString()) + "\n";
             }
             
             textDisplay = textDisplay.Replace("%[ROUNDS]%", roundsStr);
@@ -267,24 +261,8 @@ namespace POCS_Project.screens
             }
         }
 
-        private void CalculateScore()
-        {
-            if(PlayersScoreRounds.Count == _gameData.Players.Count)
-            foreach(var bet in PlayersBet)
-            {
-                int roundsWon = PlayersScoreRounds[bet.Key];
-                if (bet.Value == roundsWon)
-                    PlayersScoreGame[bet.Key] += 3;
-                else if (bet.Value > roundsWon)
-                    PlayersScoreGame[bet.Key] += roundsWon - bet.Value;
-                else
-                    PlayersScoreGame[bet.Key] -= roundsWon - bet.Value;
-            }
-        }
-
         private void VerifyEndPlay()
         {
-            CalculateScore();
             VerifyTime();
             List<Card> cards = _gameController.GetCards(_gameData.Players, _gameData.Id);
             List<Player> players = PlayersInGame.Keys.ToList();

@@ -131,6 +131,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controllers\Controller.cs" />
     <Compile Include="controllers\GameController.cs" />
     <Compile Include="controllers\ImageController.cs" />
     <Compile Include="controllers\LogicController.cs" />
