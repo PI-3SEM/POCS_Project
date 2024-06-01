@@ -242,7 +242,7 @@ namespace POCS_Project.screens
                 if (myCards.Count == 1)
                 {
                     string valueCard = Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order);
-                    if (valueCard.ToLower().Contains("apostar"))
+                    if (valueCard.ToLower().Contains("momento da aposta"))
                         throw new Exception("jogue uma carta");
                     cardToPlayIndex = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                     PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(valueCard);
