@@ -242,6 +242,8 @@ namespace POCS_Project.screens
                 if (myCards.Count == 1)
                 {
                     string valueCard = Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order);
+                    if (valueCard.ToLower().Contains("apostar"))
+                        throw new Exception("jogue uma carta");
                     cardToPlayIndex = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                     PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(valueCard);
                     PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
@@ -250,12 +252,17 @@ namespace POCS_Project.screens
                 else
                 {
                     SendCard(cardToPlay);
-                    btnProvBet0_Click(sender, e);
+                    Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
                 }
                 IsYourTime = false;
             }
             catch(Exception error)
             {
+                if(error.Message == "jogue uma carta")
+                {
+                    SendCard(cardToPlay);
+                    Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
+                }
                 lblPlayerTimeIndicator.Text = error.Message;
             }
         }
