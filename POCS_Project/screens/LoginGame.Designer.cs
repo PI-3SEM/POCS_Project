@@ -36,6 +36,7 @@
             this.btnBackToListGames = new System.Windows.Forms.Button();
             this.btnEnterInGame = new System.Windows.Forms.Button();
             this.pnlInputToLogin = new System.Windows.Forms.Panel();
+            this.checkBtnAutonomousMode = new System.Windows.Forms.CheckBox();
             this.btnInitGame = new System.Windows.Forms.Button();
             this.ErrorsMessageLabel = new System.Windows.Forms.Label();
             this.tbxPasswordGame = new System.Windows.Forms.TextBox();
@@ -44,7 +45,6 @@
             this.lblPlayerName = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBtnAutonomousMode = new System.Windows.Forms.CheckBox();
             this.pnlGameInfo.SuspendLayout();
             this.pnlInputToLogin.SuspendLayout();
             this.SuspendLayout();
@@ -102,9 +102,9 @@
             // btnBackToListGames
             // 
             this.btnBackToListGames.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnBackToListGames.Location = new System.Drawing.Point(26, 425);
+            this.btnBackToListGames.Location = new System.Drawing.Point(39, 440);
             this.btnBackToListGames.Name = "btnBackToListGames";
-            this.btnBackToListGames.Size = new System.Drawing.Size(58, 30);
+            this.btnBackToListGames.Size = new System.Drawing.Size(73, 21);
             this.btnBackToListGames.TabIndex = 1;
             this.btnBackToListGames.Text = "Voltar";
             this.btnBackToListGames.UseVisualStyleBackColor = true;
@@ -139,6 +139,17 @@
             this.pnlInputToLogin.Name = "pnlInputToLogin";
             this.pnlInputToLogin.Size = new System.Drawing.Size(303, 335);
             this.pnlInputToLogin.TabIndex = 3;
+            // 
+            // checkBtnAutonomousMode
+            // 
+            this.checkBtnAutonomousMode.AutoSize = true;
+            this.checkBtnAutonomousMode.Location = new System.Drawing.Point(31, 234);
+            this.checkBtnAutonomousMode.Name = "checkBtnAutonomousMode";
+            this.checkBtnAutonomousMode.Size = new System.Drawing.Size(104, 17);
+            this.checkBtnAutonomousMode.TabIndex = 15;
+            this.checkBtnAutonomousMode.Text = "Modo Autônomo";
+            this.checkBtnAutonomousMode.UseVisualStyleBackColor = true;
+            this.checkBtnAutonomousMode.CheckedChanged += new System.EventHandler(this.checkBtnAutonomousMode_CheckedChanged);
             // 
             // btnInitGame
             // 
@@ -220,17 +231,6 @@
             this.label1.Size = new System.Drawing.Size(17, 24);
             this.label1.TabIndex = 13;
             this.label1.Text = "*";
-            // 
-            // checkBtnAutonomousMode
-            // 
-            this.checkBtnAutonomousMode.AutoSize = true;
-            this.checkBtnAutonomousMode.Location = new System.Drawing.Point(31, 234);
-            this.checkBtnAutonomousMode.Name = "checkBtnAutonomousMode";
-            this.checkBtnAutonomousMode.Size = new System.Drawing.Size(104, 17);
-            this.checkBtnAutonomousMode.TabIndex = 15;
-            this.checkBtnAutonomousMode.Text = "Modo Autônomo";
-            this.checkBtnAutonomousMode.UseVisualStyleBackColor = true;
-            this.checkBtnAutonomousMode.CheckedChanged += new System.EventHandler(this.checkBtnAutonomousMode_CheckedChanged);
             // 
             // LoginGame
             // 

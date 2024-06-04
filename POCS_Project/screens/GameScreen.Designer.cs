@@ -44,8 +44,9 @@
             this.lblPlayerTimeIndicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPlayerTimeIndicator.ForeColor = System.Drawing.Color.Maroon;
             this.lblPlayerTimeIndicator.Location = new System.Drawing.Point(0, 0);
+            this.lblPlayerTimeIndicator.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblPlayerTimeIndicator.Name = "lblPlayerTimeIndicator";
-            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(273, 20);
+            this.lblPlayerTimeIndicator.Size = new System.Drawing.Size(230, 17);
             this.lblPlayerTimeIndicator.TabIndex = 0;
             this.lblPlayerTimeIndicator.Text = "[PLAYER] realiza a primeira jogada";
             // 
@@ -53,18 +54,18 @@
             // 
             this.pnlGame.Controls.Add(this.pbPlayedCard);
             this.pnlGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlGame.Location = new System.Drawing.Point(0, 20);
-            this.pnlGame.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlGame.Location = new System.Drawing.Point(0, 17);
+            this.pnlGame.Margin = new System.Windows.Forms.Padding(2);
             this.pnlGame.Name = "pnlGame";
-            this.pnlGame.Size = new System.Drawing.Size(1050, 818);
+            this.pnlGame.Size = new System.Drawing.Size(786, 664);
             this.pnlGame.TabIndex = 1;
             // 
             // pbPlayedCard
             // 
-            this.pbPlayedCard.Location = new System.Drawing.Point(545, 272);
-            this.pbPlayedCard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pbPlayedCard.Location = new System.Drawing.Point(409, 221);
+            this.pbPlayedCard.Margin = new System.Windows.Forms.Padding(2);
             this.pbPlayedCard.Name = "pbPlayedCard";
-            this.pbPlayedCard.Size = new System.Drawing.Size(80, 97);
+            this.pbPlayedCard.Size = new System.Drawing.Size(60, 79);
             this.pbPlayedCard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbPlayedCard.TabIndex = 1;
             this.pbPlayedCard.TabStop = false;
@@ -73,33 +74,34 @@
             // 
             this.lblVersionOnGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVersionOnGame.AutoSize = true;
-            this.lblVersionOnGame.Location = new System.Drawing.Point(1120, 1);
-            this.lblVersionOnGame.Margin = new System.Windows.Forms.Padding(13, 0, 13, 0);
+            this.lblVersionOnGame.Location = new System.Drawing.Point(840, 1);
+            this.lblVersionOnGame.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.lblVersionOnGame.Name = "lblVersionOnGame";
-            this.lblVersionOnGame.Size = new System.Drawing.Size(0, 16);
+            this.lblVersionOnGame.Size = new System.Drawing.Size(0, 13);
             this.lblVersionOnGame.TabIndex = 2;
             // 
             // tbxDisplayRounds
             // 
             this.tbxDisplayRounds.Dock = System.Windows.Forms.DockStyle.Right;
             this.tbxDisplayRounds.Enabled = false;
-            this.tbxDisplayRounds.Location = new System.Drawing.Point(1050, 20);
+            this.tbxDisplayRounds.Location = new System.Drawing.Point(786, 17);
+            this.tbxDisplayRounds.Margin = new System.Windows.Forms.Padding(2);
             this.tbxDisplayRounds.Name = "tbxDisplayRounds";
-            this.tbxDisplayRounds.Size = new System.Drawing.Size(133, 818);
+            this.tbxDisplayRounds.Size = new System.Drawing.Size(101, 664);
             this.tbxDisplayRounds.TabIndex = 3;
             this.tbxDisplayRounds.Text = "";
             // 
             // GameScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 838);
+            this.ClientSize = new System.Drawing.Size(887, 681);
             this.Controls.Add(this.pnlGame);
             this.Controls.Add(this.tbxDisplayRounds);
             this.Controls.Add(this.lblVersionOnGame);
             this.Controls.Add(this.lblPlayerTimeIndicator);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(1021, 638);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(770, 526);
             this.Name = "GameScreen";
             this.Text = "Game";
             this.Load += new System.EventHandler(this.GameScreen_Load);

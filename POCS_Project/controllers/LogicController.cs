@@ -104,6 +104,10 @@ namespace POCS_Project.controllers
                 return ReadStepValues(sepMyCards, myCards, "Heart").First();
             else
             {
+
+                if (firstSuitPlayedInThisRound.ToLower() == "heart")
+                    Console.WriteLine();
+
                 if (sepMyCards.Any(some => some.Key == firstSuitPlayedInThisRound))
                 {
                     int[] equalCards = ReadStepValues(sepMyCards, myCards, firstSuitPlayedInThisRound); // Retorna os index's de suas cartas com esse naipe

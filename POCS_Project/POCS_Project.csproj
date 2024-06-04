@@ -139,12 +139,19 @@
     <Compile Include="entities\Card.cs" />
     <Compile Include="entities\Game.cs" />
     <Compile Include="entities\Player.cs" />
+    <Compile Include="entities\Ranking.cs" />
     <Compile Include="entities\Round.cs" />
     <Compile Include="screens\CreateNewGame.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="screens\CreateNewGame.Designer.cs">
       <DependentUpon>CreateNewGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="screens\EndGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="screens\EndGame.Designer.cs">
+      <DependentUpon>EndGame.cs</DependentUpon>
     </Compile>
     <Compile Include="screens\Form1.cs">
       <SubType>Form</SubType>
@@ -176,6 +183,9 @@
     <Compile Include="utils\ScreenSelector.cs" />
     <EmbeddedResource Include="screens\CreateNewGame.resx">
       <DependentUpon>CreateNewGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="screens\EndGame.resx">
+      <DependentUpon>EndGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="screens\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

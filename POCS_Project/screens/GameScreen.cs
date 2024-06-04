@@ -4,6 +4,7 @@ using POCS_Project.controllers;
 using POCS_Project.entities;
 using POCS_Project.utils;
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -79,8 +80,14 @@ namespace POCS_Project.screens
 
             /*Verificação se a carta foi usada*/
             for(int i = 0; i < cards.Count; i++)
-                if (PlayedCards.Where(x => x.Owner == player).Any(x => x.Order == PlayersInGame[player][i].Order))
+            {
+                Card card = PlayedCards.FirstOrDefault(x => x.Owner == player && x.Order == PlayersInGame[player][i].Order);
+                if (card != null)
+                {
                     PlayersInGame[player][i].WasUsed = true;
+                    PlayersInGame[player][i].Value = card.Value;
+                }
+            }
             
             cards = PlayersInGame[player];
             foreach (Card card in cards)
@@ -215,49 +222,44 @@ namespace POCS_Project.screens
         private void AutonomousSystemPlay(object sender, EventArgs e)
         {
             List<Card> myCards = PlayersInGame[LoggedUser].Where(x=>!x.WasUsed).ToList();
-            if (myCards.Count == 0)
-            {
-                VerifyEndPlay();
-                return;
-            }
             Card cardToPlay;
             int cardToPlayIndex = 0;
 
             Dictionary<string, int[]> lol = _logicController.FirstStep(myCards);
-
+            int orderCard;
             if (PlayedCards.Count > 0)
-                cardToPlayIndex = myCards.FindIndex(x=>x.Order == _logicController.AfterThem(PlayedCards, myCards, CurrentRound));
+            {
+                orderCard = _logicController.AfterThem(PlayedCards, myCards, CurrentRound);
+                cardToPlayIndex = myCards.FindIndex(x=>x.Order == orderCard);
+            }
             else
-                cardToPlayIndex = myCards.FindIndex(x => x.Order == _logicController.FirstPlay(myCards));
+            {
+                orderCard = _logicController.FirstPlay(myCards);
+                cardToPlayIndex = myCards.FindIndex(x => x.Order == orderCard);
+            }
 
             cardToPlay = myCards[cardToPlayIndex];
             try
             {
-                if (myCards.Count == 1)
+                SendCard(cardToPlay);
+                Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
+                IsYourTime = false;
+            }
+            catch(Exception error)
+            {
+                lblPlayerTimeIndicator.Text = error.Message;
+                if (error.Message.Contains("aposte"))
                 {
                     string valueCard = Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, cardToPlay.Order);
-                    if (valueCard.ToLower().Contains("momento da aposta"))
-                        throw new Exception("jogue uma carta");
                     cardToPlayIndex = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                     PlayersInGame[LoggedUser][cardToPlayIndex].Value = Convert.ToInt32(valueCard);
                     PlayersInGame[LoggedUser][cardToPlayIndex].WasUsed = true;
                     lblPlayerTimeIndicator.Text = $"Foi realizado a aposta, a aposta foi vencer {PlayersInGame[LoggedUser][cardToPlayIndex].Value} partidas!";
                 }
-                else
+                if (error.Message.Contains("naipe"))
                 {
-                    SendCard(cardToPlay);
-                    Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
+                    VerifyEndPlay();
                 }
-                IsYourTime = false;
-            }
-            catch(Exception error)
-            {
-                if(error.Message == "jogue uma carta")
-                {
-                    SendCard(cardToPlay);
-                    Jogo.Apostar(LoggedUser.Id, LoggedUser.Password, 0);
-                }
-                lblPlayerTimeIndicator.Text = error.Message;
             }
         }
 
@@ -275,7 +277,7 @@ namespace POCS_Project.screens
                 RenderCard(player.Key,player.Value);
             
             if(_gameData.Situation == GameSituation.Closed)
-                this.ChangeScreen(new SelectAnExistentGame());
+                this.ChangeScreen(new EndGame(_gameData));
         }
 
         private void SendCard(object sender, EventArgs e)
@@ -306,6 +308,10 @@ namespace POCS_Project.screens
             if (IsYourTime)
             {
                 string playResult = Jogo.Jogar(cardToPlay.Owner.Id, LoggedUser.Password, cardToPlay.Order);
+                if (playResult.ToLower().Contains("aposta"))
+                    throw new Exception("aposte");
+                if (playResult.ToLower().Contains("naipe"))
+                    throw new Exception("naipe incorreto");
                 int cardValue = Convert.ToInt32(playResult);
                 int indexCard = PlayersInGame[LoggedUser].FindIndex(x => x.Order == cardToPlay.Order);
                 PlayersInGame[LoggedUser][indexCard].Value = cardValue;
@@ -349,7 +355,7 @@ namespace POCS_Project.screens
         {
             var MyTimer = new Timer
             {
-                Interval = 5000,
+                Interval = 3000,
                 Enabled = true
             };
             MyTimer.Tick += new EventHandler(RenderSendedCards);
