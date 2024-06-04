@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+using System.Reflection;
 
 namespace POCS_Project.utils
 {
@@ -35,6 +38,39 @@ namespace POCS_Project.utils
             {
                 return enumValue.ToString(); // Retorna o nome padrão do enum se o atributo de exibição não estiver definido
             }
+        }
+        public static IList<string> GetEnumDisplayValues<T>() where T : Enum
+        {
+            var type = typeof(T);
+            var displayValues = new List<string>();
+
+            foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.Static))
+            {
+                var displayAttribute = field.GetCustomAttribute<DisplayAttribute>();
+                if (displayAttribute != null)
+                {
+                    displayValues.Add(displayAttribute.Name);
+                }
+                else
+                {
+                    displayValues.Add(field.Name);
+                }
+            }
+
+            return displayValues;
+        }
+        public static List<string> GetBitmapNames(this List<Bitmap> bitmaps)
+        {
+            var bitmapNames = new List<string>();
+            var properties = typeof(Properties.Resources).GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic);
+
+            foreach (var property in properties)
+            {
+                if (property.PropertyType == typeof(Bitmap))
+                    bitmapNames.Add(property.Name);
+            }
+
+            return bitmapNames;
         }
     }
 }

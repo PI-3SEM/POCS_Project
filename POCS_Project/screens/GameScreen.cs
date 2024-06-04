@@ -98,11 +98,10 @@ namespace POCS_Project.screens
                     BackgroundImageLayout = ImageLayout.Center,
                     MaximumSize = new Size(CardStyle.x, CardStyle.y + 5)
                 };
-                List<string> pathImage = !card.WasUsed?CardStyle.pathsNotPlayed:CardStyle.pathsPlayed;
-                Image image = Image.FromFile(pathImage.FirstOrDefault(x => x.Contains(card.Suit.GetDisplayName())));
-
+                Image image = CardStyle.cardImages[card.Suit.GetDisplayName()];
                 if (card.WasUsed)
                 {
+                    image = CardStyle.cardImages[card.Suit.GetDisplayName() + "Virada"];
                     _imageController.TurnImageBlackAndWhite(ref image);
                     _imageController.ModifyCardImageInsertValue(ref image, card);
                 }
@@ -213,7 +212,7 @@ namespace POCS_Project.screens
             if (PlayedCards.Count > 0)
             {
                 Card cardData = PlayedCards.Last();
-                Image cardImage = Image.FromFile(CardStyle.pathsPlayed.FirstOrDefault(x => x.Contains(cardData.Suit.GetDisplayName())));
+                Image cardImage = CardStyle.cardImages[cardData.Suit.GetDisplayName() + "Virada"];
                 _imageController.ModifyCardImageInsertValue(ref cardImage, cardData);
                 pbPlayedCard.Image = cardImage;
             }

@@ -198,6 +198,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="screens\GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
@@ -245,11 +246,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Assets\Copas.png" />
+    <None Include="bin\Debug\Assets\TriânguloVirada.png" />
+    <None Include="bin\Debug\Assets\CopasVirada.png" />
     <Content Include="bin\Debug\Assets\Espadas.png" />
+    <None Include="bin\Debug\Assets\EspadasVirada.png" />
     <Content Include="bin\Debug\Assets\Estrela.png" />
+    <None Include="bin\Debug\Assets\EstrelaVirada.png" />
     <Content Include="bin\Debug\Assets\Lua.png" />
+    <None Include="bin\Debug\Assets\LuaVirada.png" />
     <Content Include="bin\Debug\Assets\Ouros.png" />
+    <None Include="bin\Debug\Assets\OurosVirada.png" />
     <Content Include="bin\Debug\Assets\Paus.png" />
+    <None Include="bin\Debug\Assets\PausVirada.png" />
     <Content Include="bin\Debug\Assets\Triângulo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
